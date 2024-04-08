@@ -1,0 +1,49 @@
+---
+# Feit BPA800/RGBW/AG/2(P)
+# NOT the BPA800/RGBW/AG/2
+sm16716:
+  data_pin: GPIO12
+  clock_pin: GPIO14
+  num_channels: 3
+  num_chips: 1
+
+output:
+  - platform: sm16716
+    id: output_red
+    channel: 2
+    power_supply: rgb_power
+  - platform: sm16716
+    id: output_green
+    channel: 1
+    power_supply: rgb_power
+  - platform: sm16716
+    id: output_blue
+    channel: 0
+    power_supply: rgb_power
+  - platform: esp8266_pwm
+    id: output_color_temperature
+    inverted: true
+    pin: GPIO05
+  - platform: esp8266_pwm
+    id: output_brightness
+    min_power: 0.05
+    zero_means_zero: true
+    pin: GPIO04
+
+light:
+  - platform: rgbct
+    name: "${friendly_name}"
+    restore_mode: RESTORE_DEFAULT_OFF
+    red: output_red
+    green: output_green
+    blue: output_blue
+    color_temperature: output_color_temperature
+    white_brightness: output_brightness
+    cold_white_color_temperature: 6500 K
+    warm_white_color_temperature: 2700 K
+    color_interlock: true
+
+power_supply:
+  - id: rgb_power
+    pin: GPIO13
+
