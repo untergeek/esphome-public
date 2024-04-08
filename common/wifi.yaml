@@ -1,0 +1,12 @@
+---
+# This file is here for reference and cannot be used as a package because of !secret 
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_pass
+  domain: ${wifi_domain}
+  fast_connect: on
+  use_address: $ipaddr
+
+  ap:
+    ssid: AP_${devicename}
+
