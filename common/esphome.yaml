@@ -1,0 +1,10 @@
+esphome:
+  name: ${devicename}
+  friendly_name: "${friendly_name}"
+  comment: "${comment}"
+  area: ${area}
+  name_add_mac_suffix: false
+  project:
+    name: ${project_name}
+    version: ${project_version}
+

@@ -1,0 +1,7 @@
+---
+
+switch:
+  - platform: restart
+    name: "Restart '${friendly_name}'"
+    id: "restart_device"
+
