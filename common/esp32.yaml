@@ -1,8 +1,6 @@
 ---
-
-<<: !include .esphome.yaml
-
 esp32:
   board: ${board}
   framework:
     type: ${framework}
+
