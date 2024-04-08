@@ -1,0 +1,4 @@
+---
+<<: !include ../common.yaml
+<<: !include { file: ../esp32.yaml, vars: { board: nodemcu-32s } }
+
