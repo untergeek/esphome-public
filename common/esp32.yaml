@@ -1,6 +1,6 @@
 ---
 
-<<: !include .esphome.yaml
+<<: !include esphome.yaml
 
 esp32:
   board: ${board}
