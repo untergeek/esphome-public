@@ -1,0 +1,6 @@
+---
+# This file is here for reference and cannot be used as a package because of !secret
+api:
+  encryption:
+    key: !secret encryption_key
+
