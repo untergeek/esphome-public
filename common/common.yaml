@@ -1,0 +1,8 @@
+---
+packages:
+  wifi: !include .wifi.yaml
+  ota: !include .ota.yaml
+  api: !include .api.yaml
+  time: !include .time.yaml
+  log: !include .logging.yaml
+
