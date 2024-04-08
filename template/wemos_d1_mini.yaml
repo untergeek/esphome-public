@@ -1,0 +1,3 @@
+---
+<<: !include ../common.yaml
+<<: !include { file: ../esp8266.yaml, vars: { board: d1_mini } }
