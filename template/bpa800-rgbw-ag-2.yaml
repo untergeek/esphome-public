@@ -1,7 +1,7 @@
 ---
 <<: !include esphome.yaml
 <<: !include time.yaml
-<<: !include { file: ../logging.yaml, vars: { log_baud: "0" } }
+<<: !include { file: ../logging.yaml, vars: { log_baud: 0 } }
 <<: !include { file: ../esp8266.yaml, vars: { board: esp01_1m } }
 
 # Feit BPA800/RGBW/AG/2
