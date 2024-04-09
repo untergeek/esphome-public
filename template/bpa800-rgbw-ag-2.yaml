@@ -1,5 +1,5 @@
 ---
-<<: !include ../esphome.yaml
+<<: !include { file: ../esphome.yaml, vars: { project_name: untergeek.bpa800-rgb2-ag-2, project_version: 1.1.0 } }
 <<: !include ../time.yaml
 <<: !include ../noseriallog.yaml
 <<: !include { file: ../esp8266.yaml, vars: { board: esp01_1m } }
