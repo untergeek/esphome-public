@@ -9,6 +9,7 @@
   vars:
     board: esp01_1m
 <<: !include ../time.yaml
+<<: !include ../restart_switch.yaml
 <<: !include ../noseriallog.yaml
 
 uart:
