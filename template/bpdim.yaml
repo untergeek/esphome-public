@@ -1,0 +1,28 @@
+---
+<<: !include
+  file: ../esphome.yaml
+  vars:
+    project_name: untergeek.bpdim
+    project_version: 1.0.0
+<<: !include
+  file: ../esp8266.yaml
+  vars:
+    board: esp01_1m
+<<: !include ../time.yaml
+<<: !include ../noseriallog.yaml
+
+uart:
+  rx_pin: GPIO3
+  tx_pin: GPIO1
+  baud_rate: 9600
+
+tuya:
+
+light:
+  - platform: "tuya"
+    name: "${friendly_name}"
+    dimmer_datapoint: 2
+    switch_datapoint: 1
+    min_value: $min_brightness
+    max_value: $max_brightness
+
