@@ -1,5 +1,6 @@
 ---
-<<: !include esphome.yaml
-<<: !include time.yaml
-<<: !include logging.yaml
+packages:
+  esphome: !include esphome.yaml
+  time: !include time.yaml
+  logging: !include logging.yaml
 

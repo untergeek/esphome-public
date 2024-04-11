@@ -1,12 +1,17 @@
 ---
-<<: !include 
-  file: ../esphome.yaml
-  vars: 
-    project_name: untergeek.bpa800-rgb2-ag-2p
-    project_version: 1.2.0
-<<: !include ../time.yaml
-<<: !include ../noseriallog.yaml
-<<: !include { file: ../esp8266.yaml, vars: { board: esp01_1m } }
+packages:
+  main: !include
+    file: ../esphome.yaml
+    vars:
+      project_name: untergeek.bpa800-rgb2-ag-2p
+      project_version: 1.2.0
+  chip: !include
+    file: ../esp8266.yaml
+    vars:
+      board: esp01_1m
+  sync: !include ../time.yaml
+  togl: !include ../restart_switch.yaml
+  logs: !include ../logging.yaml
 
 defaults:
   cold: 6500 K
