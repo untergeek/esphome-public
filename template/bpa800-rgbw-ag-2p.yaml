@@ -14,9 +14,9 @@ packages:
   logs: !include ../logging.yaml
 
 substitutions:
-  cold: 6500 K
-  warm: 2700 K
-  gamma: 0.0
+  cold: "6500 K"
+  warm: "2700 K"
+  gamma: "0.0"
   restore_mode: RESTORE_DEFAULT_OFF
 
 ### Change from defaults in substitutions
