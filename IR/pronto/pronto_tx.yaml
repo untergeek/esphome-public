@@ -1,0 +1,23 @@
+---
+remote_transmitter.transmit_pronto:
+  data: ${data}
+  repeat:
+    times: ${times}
+    wait_time: ${wait}
+
+# Assigning values
+
+# <<: !include
+#   file: pronto_tx.yaml
+#   vars:
+#     # data: # This should be handled via dedicated import:
+#     <<: !include /path/to/datafile.yaml
+#     times: # custom number of times to repeat data signal
+#     wait_time: # custom amount of time to wait between repeats
+
+# The <<: !include way to import data should work per signal, so long as:
+# the data file has a single key, 'data', followed by a Pronto signal code block, e.g.
+# 
+# ---
+# data: '...'
+
