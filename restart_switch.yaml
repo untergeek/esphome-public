@@ -1,9 +1,9 @@
 ---
-defaults:
-  restart_sw_id: restart_device
+substitutions:
+  rds: r_sw
 
 switch:
   - platform: restart
     name: "Restart '${friendly_name}'"
-    id: ${restart_sw_id}
+    id: ${rds}
 

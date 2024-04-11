@@ -14,7 +14,7 @@ packages:
   togl: !include ../restart_switch.yaml
   logs: !include ../logging.yaml
 
-defaults:
+substitutions:
   tuya_id: dimmer
   icon: "mdi:light-switch"
   min: 10
@@ -23,9 +23,9 @@ defaults:
   tx_pin: GPIO1
   baud: 9600
 
-### Change from default values
+### Change from default values in substitutions
 
-# If any value needs changing from these defaults, use vars during package import
+# If any value needs changing, set substitutions in the main configuration file, or use vars during package import
 
 #packages:
 #  remote: !include

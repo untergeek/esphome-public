@@ -13,15 +13,15 @@ packages:
   togl: !include ../restart_switch.yaml
   logs: !include ../logging.yaml
 
-defaults:
+substitutions:
   cold: 6500 K
   warm: 2700 K
   gamma: 0.0
   restore_mode: RESTORE_DEFAULT_OFF
 
-### Change from defaults
+### Change from defaults in substitutions
 
-# If any value needs changing, use package import
+# If any value needs changing, use substitutions in the main configuration file, or package import
 
 #packages:
 #  remote: !include

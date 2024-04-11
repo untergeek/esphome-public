@@ -1,5 +1,5 @@
 ---
-defaults:
+substitutions:
   log_baud: 0
   log_level: DEBUG
 
