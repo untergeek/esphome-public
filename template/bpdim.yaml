@@ -17,11 +17,11 @@ packages:
 substitutions:
   tuya_id: dimmer
   icon: "mdi:light-switch"
-  min: 10
-  max: 1000
+  min: "10"
+  max: "1000"
   rx_pin: GPIO3
   tx_pin: GPIO1
-  baud: 9600
+  baud: "9600"
 
 ### Change from default values in substitutions
 

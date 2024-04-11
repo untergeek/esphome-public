@@ -4,8 +4,8 @@
 
 substitutions:
   data: '0000 006D 0000 0000' # This is a signal preamble indicating no code will be sent
-  times: 3
-  wait_time: 0ms
+  times: "3"
+  wait_time: "0ms"
 
 remote_transmitter.transmit_pronto:
   data: ${data}
