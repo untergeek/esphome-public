@@ -1,6 +1,8 @@
 ---
 substitutions:
   button_icon: "mdi:emoticon-outline"
+  times: "2"
+  wait_time: "0ms"
   
 button:
   - platform: template
