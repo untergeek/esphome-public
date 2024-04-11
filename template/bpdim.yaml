@@ -1,18 +1,18 @@
 ---
 # We track the project name and version here in the template
-<<: !include
-  file: ../esphome.yaml
-  vars:
-    project_name: untergeek.bpdim
-    project_version: 1.1.0
-
-<<: !include
-  file: ../esp8266.yaml
-  vars:
-    board: esp01_1m
-<<: !include ../time.yaml
-<<: !include ../restart_switch.yaml
-<<: !include ../noseriallog.yaml
+packages:
+  main: !include
+    file: ../esphome.yaml
+    vars:
+      project_name: untergeek.bpdim
+      project_version: 1.1.0
+  chip: !include
+    file: ../esp8266.yaml
+    vars:
+      board: esp01_1m
+  sync: !include ../time.yaml
+  togl: !include ../restart_switch.yaml
+  logs: !include ../logging.yaml
 
 defaults:
   tuya_id: dimmer
