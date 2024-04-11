@@ -1,0 +1,28 @@
+---
+### For ESP8266 based blaster units -- including ESP12-E analogs like the Tuya CB3S --
+### the GPIOs all seem to be the same
+
+# Button  : GPIO13
+# IR RX   : GPIO5
+# WiFi LED: GPIO4
+# IR TX   : GPIO14
+
+remote_receiver:
+  id: ir_rx
+  pin:
+    number: GPIO5
+    inverted: true
+
+### EXTENDING
+
+# If any value needs changing, use the !extend functionality:
+
+# remote_receiver:
+#   - id: !extend ir_rx
+#     pin:
+#       number: # Other GPIO
+#       inverted: # True or False
+#     dump: # all, or a list of individual codes 
+
+# See https://esphome.io/components/remote_receiver.html?highlight=remote_receiver#configuration-variables
+

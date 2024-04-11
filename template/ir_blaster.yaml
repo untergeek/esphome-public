@@ -7,13 +7,12 @@
 <<: !include
   file: ../esphome.yaml
   vars:
-    project_name: untergeek.ir_blaster
+    project_name: untergeek.esp8266_ir_blaster
     project_version: 1.0.0
 <<: !include ../time.yaml
 <<: !include ../restart_switch.yaml
 <<: !include ../noseriallog.yaml
 
-remote_transmitter:
-  pin: ${ir_tx_pin}
-  carrier_duty_percent: 50%
+# You need to include at least one of ir_tx.yaml or ir_rx.yaml, or build your own
+# remote_transmitter / remote_receiver blocks
 

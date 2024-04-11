@@ -1,0 +1,26 @@
+---
+### For ESP8266 based blasters -- including ESP12-E analogs like the Tuya CB3S --
+### the GPIOs all seem to be the same
+
+# Button  : GPIO13
+# IR RX   : GPIO5
+# WiFi LED: GPIO4
+# IR TX   : GPIO14
+
+remote_transmitter:
+  id: ir_tx
+  pin: GPIO14
+  carrier_duty_percent: 50%
+
+### EXTENDING
+
+# If any value needs changing, use the !extend functionality:
+
+# remote_transmitter:
+#   - id: !extend ir_tx
+#     pin: # Other GPIO
+#     carrier_duty_percent: # Other percentage
+#     # Other settings and values?
+
+# See https://esphome.io/components/remote_transmitter.html
+
