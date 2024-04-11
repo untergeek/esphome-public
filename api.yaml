@@ -1,5 +1,5 @@
 ---
-defaults:
+substitutions:
   api_secret: NOT_CONFIGURED
 
 api:

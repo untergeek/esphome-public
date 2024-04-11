@@ -2,7 +2,7 @@
 ### For ESP8266 based blasters -- including ESP12-E analogs like the Tuya CB3S --
 ### the GPIOs all seem to be the same
 
-defaults:
+substitutions:
   button_pin: GPIO13
   ir_rx_pin: GPIO5
   wifi_led_pin: GPIO4
@@ -14,9 +14,9 @@ remote_transmitter:
   pin: ${ir_tx_pin}
   carrier_duty_percent: ${duty_pct}
 
-### Change from defaults
+### Change from default values in substitutions
 
-# If any value needs changing, use package import 
+# If any value needs changing, set substitutions in the main configuration file, or use package import 
 
 #packages:
 #  remote: !include

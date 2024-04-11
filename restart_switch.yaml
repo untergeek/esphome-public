@@ -1,5 +1,5 @@
 ---
-defaults:
+substitutions:
   restart_sw_id: restart_device
 
 switch:

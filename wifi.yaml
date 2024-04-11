@@ -1,5 +1,5 @@
 ---
-defaults:
+substitutions:
   wifi_ssid: NOT_CONFIGURED
   wifi_pass: NOT_CONFIGURED
   wifi_domain: example.org

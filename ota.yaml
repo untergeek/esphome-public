@@ -1,5 +1,5 @@
 ---
-defaults:
+substitutions:
   ota_pass: NOT_CONFIGURED
 
 ota:

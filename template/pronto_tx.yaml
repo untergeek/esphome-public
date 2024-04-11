@@ -2,7 +2,7 @@
 # This is more for an example than for use. The reason is that 
 # remote_transmitter.transmit_pronto has to be part of an action, rather than a stand-alone template
 
-defaults:
+substitutions:
   data: '0000 006D 0000 0000' # This is a signal preamble indicating no code will be sent
   times: 3
   wait_time: 0ms

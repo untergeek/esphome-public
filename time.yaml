@@ -1,5 +1,5 @@
 ---
-defaults:
+substitutions:
   hass_time_id: homeassistant_time
 
 time:
