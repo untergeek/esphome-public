@@ -1,7 +1,6 @@
 ---
 substitutions:
   button_icon: "mdi:emoticon-outline"
-  datafile: "/path/to/datafile.yaml"
   
 button:
   - platform: ...
@@ -9,8 +8,5 @@ button:
     id: "${button_name}_id"
     icon: ${button_icon}
     on_press:
-      - <<: !include
-          file: pronto_tx.yaml
-          vars:
-            <<: !include ${datafile}
+      - <<: !include {file: "${actionfile}"}
 
