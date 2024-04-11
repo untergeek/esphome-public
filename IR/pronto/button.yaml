@@ -8,5 +8,9 @@ button:
     id: "${button_name}_id"
     icon: ${button_icon}
     on_press:
-      - <<: !include {file: "${actionfile}"}
+      remote_transmitter.transmit_pronto:
+        data: ${data}
+        repeat:
+          times: ${times}
+          wait_time: ${wait}
 

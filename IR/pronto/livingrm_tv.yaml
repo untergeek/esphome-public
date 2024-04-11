@@ -5,23 +5,23 @@ packages:
     vars:
       button_name: Power
       button_icon: "mdi:power"
-      actionfile: "upstairs_tv/power.yaml"
-  vol_up: !include
-    file: button.yaml
-    vars:
-      button_name: Volume Up
-      button_icon: "mdi:volume-plus"
-      actionfile: "upstairs_tv/vol_up.yaml"
-  vol_down: !include
-    file: button.yaml
-    vars:
-      button_name: Volume Down
-      button_icon: "mdi:volume-minus"
-      actionfile: "upstairs_tv/vol_down.yaml"
-  mute: !include
-    file: button.yaml
-    vars:
-      button_name: Volume Down
-      button_icon: "mdi:volume-mute"
-      actionfile: "upstairs_tv/mute.yaml"
+      <<: !include "upstairs_tv/power.yaml"
+#  vol_up: !include
+#    file: button.yaml
+#    vars:
+#      button_name: Volume Up
+#      button_icon: "mdi:volume-plus"
+#      actionfile: "upstairs_tv/vol_up.yaml"
+#  vol_down: !include
+#    file: button.yaml
+#    vars:
+#      button_name: Volume Down
+#      button_icon: "mdi:volume-minus"
+#      actionfile: "upstairs_tv/vol_down.yaml"
+#  mute: !include
+#    file: button.yaml
+#    vars:
+#      button_name: Volume Down
+#      button_icon: "mdi:volume-mute"
+#      actionfile: "upstairs_tv/mute.yaml"
 
