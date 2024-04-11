@@ -1,6 +1,8 @@
 ---
-# This file is here for reference and cannot be used as a package because of !secret
+defaults:
+  api_secret: NOT_CONFIGURED
+
 api:
   encryption:
-    key: !secret encryption_key
+    key: ${api_secret}
 

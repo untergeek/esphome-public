@@ -1,5 +1,8 @@
 ---
+defaults:
+  hass_time_id: homeassistant_time
+
 time:
   - platform: homeassistant
-    id: homeassistant_time
+    id: ${hass_time_id}
 

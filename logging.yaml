@@ -1,4 +1,8 @@
 ---
+defaults:
+  log_baud: 0
+  log_level: DEBUG
+
 logger:
   baud_rate: ${log_baud}
   level: ${log_level}

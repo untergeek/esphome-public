@@ -1,0 +1,35 @@
+---
+# This is more for an example than for use. The reason is that 
+# remote_transmitter.transmit_pronto has to be part of an action, rather than a stand-alone template
+
+defaults:
+  data: '0000 006D 0000 0000' # This is a signal preamble indicating no code will be sent
+  times: 3
+  wait_time: 0ms
+
+remote_transmitter.transmit_pronto:
+  data: ${data}
+  repeat:
+    times: ${times}
+    wait_time: ${wait}
+
+### Change from default values
+
+# If any value needs changing from these defaults, use vars during package import
+
+#packages:
+#  remote: !include
+#    file: template/pronto_tx.yaml
+#    vars:
+#      id: # custom id --- this is necessary when multiple are in the same configuration
+#      # data: # This should be handled via dedicated import:
+#      <<: !include /path/to/datafile.yaml
+#      times: # custom number of times to repeat data signal
+#      wait_time: # custom amount of time to wait between repeats
+
+# The <<: !include way to import data should work per signal, so long as:
+# the data file has a single key, 'data', followed by a Pronto signal code block, e.g.
+# 
+# ---
+# data: '...'
+

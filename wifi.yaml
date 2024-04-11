@@ -1,11 +1,16 @@
 ---
-# This file is here for reference and cannot be used as a package because of !secret 
+defaults:
+  wifi_ssid: NOT_CONFIGURED
+  wifi_pass: NOT_CONFIGURED
+  wifi_domain: example.org
+  fast_connect: on  
+  
 wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_pass
+  ssid: ${wifi_ssid}
+  password: ${wifi_pass}
   domain: ${wifi_domain}
-  fast_connect: on
-  use_address: $ipaddr
+  fast_connect: ${fast_connect}
+  use_address: ${ipaddr}
 
   ap:
     ssid: AP_${devicename}

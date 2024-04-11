@@ -1,5 +1,7 @@
 ---
-# This file is here for reference and cannot be used as a package because of !secret
+defaults:
+  ota_pass: NOT_CONFIGURED
+
 ota:
-  password: !secret ota_pass
+  password: ${ota_pass}
 
