@@ -3,10 +3,29 @@
   file: ../esphome.yaml
   vars:
     project_name: untergeek.bpa800-rgb2-ag-2
-    project_version: 1.1.0
+    project_version: 1.2.0
 <<: !include ../time.yaml
 <<: !include ../noseriallog.yaml
 <<: !include { file: ../esp8266.yaml, vars: { board: esp01_1m } }
+
+defaults:
+  cold: 6500 K
+  warm: 2700 K
+  gamma: 0.0
+  restore_mode: RESTORE_DEFAULT_OFF
+
+### Change from defaults
+
+# If any value needs changing, use package import
+
+#packages:
+#  remote: !include
+#    file: template/bpa800-rgb2-ag-2.yaml
+#    vars:
+#      cold: # custom temp
+#      warm: # custom temp
+#      gamma: # custom gamma correction
+#      restore_mode: # custom restore_mode value
 
 # Feit BPA800/RGBW/AG/2
 # NOT the BPA800/RGBW/AG/2(P)
@@ -40,15 +59,15 @@ light:
   - platform: rgbww
     name: "${friendly_name}"
     color_interlock: true
-    restore_mode: RESTORE_DEFAULT_OFF
+    restore_mode: ${restore_mode}
     red: output_red
     green: output_green
     blue: output_blue
     cold_white: output_cold_white
     warm_white: output_warm_white
-    cold_white_color_temperature: 6500 K
-    warm_white_color_temperature: 2700 K
-    gamma_correct: 0.0
+    cold_white_color_temperature: ${cold}
+    warm_white_color_temperature: ${warm}
+    gamma_correct: ${gamma}
 
 power_supply:
   - id: rgb_power

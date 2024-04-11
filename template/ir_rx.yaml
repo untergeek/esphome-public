@@ -2,20 +2,31 @@
 ### For ESP8266 based blaster units -- including ESP12-E analogs like the Tuya CB3S --
 ### the GPIOs all seem to be the same
 
-# Button  : GPIO13
-# IR RX   : GPIO5
-# WiFi LED: GPIO4
-# IR TX   : GPIO14
+defaults:
+  button_pin: GPIO13
+  ir_rx_pin: GPIO5
+  wifi_led_pin: GPIO4
+  ir_tx_pin: GPIO14
+  inverted: true
 
 remote_receiver:
   id: ir_rx
   pin:
-    number: GPIO5
-    inverted: true
+    number: ${ir_rx_pin}
+    inverted: ${inverted}
 
-### EXTENDING
+### Change from defaults
 
-# If any value needs changing, use the !extend functionality:
+# If any value needs changing from these defaults, use package import
+
+#packages:
+#  remote: !include
+#    file: template/ir_rx.yaml
+#    vars:
+#      ir_rx_pin: # different GPIO
+#      inverted: # differnt value
+
+# If you really need to mess with it, use the !extend functionality:
 
 # remote_receiver:
 #   - id: !extend ir_rx

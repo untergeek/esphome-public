@@ -1,9 +1,11 @@
 ---
+# We track the project name and version here in the template
 <<: !include
   file: ../esphome.yaml
   vars:
     project_name: untergeek.bpdim
-    project_version: 1.0.0
+    project_version: 1.1.0
+
 <<: !include
   file: ../esp8266.yaml
   vars:
@@ -12,20 +14,45 @@
 <<: !include ../restart_switch.yaml
 <<: !include ../noseriallog.yaml
 
-uart:
+defaults:
+  tuya_id: dimmer
+  icon: "mdi:light-switch"
+  min: 10
+  max: 1000
   rx_pin: GPIO3
   tx_pin: GPIO1
-  baud_rate: 9600
+  baud: 9600
+
+### Change from default values
+
+# If any value needs changing from these defaults, use vars during package import
+
+#packages:
+#  remote: !include
+#    file: template/bpdim.yaml
+#    vars:
+#      id: # custom id
+#      icon: # custom icon
+#      min: # custom minimum brightness (floor is 0)
+#      max: # custom maximum brightness (ceiling is 1000)
+#      rx_pin: # custom GPIO
+#      tx_pin: # custom GPIO
+#      baud: # custom serial baud rate
+
+uart:
+  rx_pin: ${rx_pin}
+  tx_pin: ${tx_pin}
+  baud_rate: ${baud}
 
 tuya:
 
 light:
   - platform: "tuya"
-    id: dimmer
-    icon: "mdi:light-switch"
+    id: ${tuya_id}
+    icon: ${icon}
     name: "${friendly_name}"
     dimmer_datapoint: 2
     switch_datapoint: 1
-    min_value: $min_brightness
-    max_value: $max_brightness
+    min_value: ${min}
+    max_value: ${max}
 
