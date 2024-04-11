@@ -1,0 +1,19 @@
+---
+### For the ir_blaster template:
+### Under substitutions, 
+### You must manually add board: esp01_1m or board: esp12e
+<<: !include ../esp8266.yaml
+
+<<: !include
+  file: ../esphome.yaml
+  vars:
+    project_name: untergeek.ir_blaster
+    project_version: 1.0.0
+<<: !include ../time.yaml
+<<: !include ../restart_switch.yaml
+<<: !include ../noseriallog.yaml
+
+remote_transmitter:
+  pin: ${ir_tx_pin}
+  carrier_duty_percent: 50%
+
