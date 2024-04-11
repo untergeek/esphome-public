@@ -1,6 +1,6 @@
 ---
 defaults:
-  restore: false
+  restore: "false"
 
 esp8266:
   board: ${board}
