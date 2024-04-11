@@ -1,9 +1,9 @@
 ---
 substitutions:
-  restart_sw_id: restart_device
+  rds: r_sw
 
 switch:
   - platform: restart
     name: "Restart '${friendly_name}'"
-    id: ${restart_sw_id}
+    id: ${rds}
 

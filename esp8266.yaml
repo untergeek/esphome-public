@@ -1,4 +1,8 @@
 ---
+substitutions:
+  restore: "false"
+
 esp8266:
   board: ${board}
+  restore_from_flash: "${restore}"  
 

@@ -1,8 +1,8 @@
 ---
 substitutions:
-  hass_time_id: homeassistant_time
+  time_id: ha_time
 
 time:
   - platform: homeassistant
-    id: ${hass_time_id}
+    id: ${time_id}
 

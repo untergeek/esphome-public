@@ -1,3 +1,4 @@
+---
 esphome:
   name: ${devicename}
   friendly_name: "${friendly_name}"
