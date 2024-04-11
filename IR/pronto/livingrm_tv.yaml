@@ -21,7 +21,7 @@ packages:
   mute: !include
     file: button.yaml
     vars:
-      button_name: Volume Down
+      button_name: Mute
       button_icon: "mdi:volume-mute"
       <<: !include "upstairs_tv/mute.yaml"
 
