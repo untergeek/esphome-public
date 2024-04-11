@@ -3,7 +3,7 @@ substitutions:
   button_icon: "mdi:emoticon-outline"
   
 button:
-  - platform: ...
+  - platform: template
     name: "${button_name} Button"
     id: "${button_name}_id"
     icon: ${button_icon}
