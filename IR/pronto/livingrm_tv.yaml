@@ -5,6 +5,8 @@ packages:
     vars:
       button_name: Power
       button_icon: "mdi:power"
+      times: 5
+      wait: 15ms
       <<: !include "upstairs_tv/power.yaml"
   vol_up: !include
     file: button.yaml
