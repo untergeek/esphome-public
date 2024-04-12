@@ -32,5 +32,5 @@ substitutions:
 #      <<: !include "upstairs_tv/mute.yaml"
 
 button:
-  - <<: !include upstairs_tv/power.yaml
+  <<: !include upstairs_tv/power.yaml
 
