@@ -36,5 +36,5 @@ button:
     name: Power Button
     icon: mdi:power
     on_press:
-      <<: !include upstairs_tv/power.yaml
+      <<: !include {file: upstairs_tv/power.yaml, vars: {reps: $reps, wait: $wait, freq: $freq}}
 

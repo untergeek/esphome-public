@@ -1,11 +1,5 @@
 ---
 # Power button
-
-substitutions:
-  reps: "1"
-  wait: "50ms"
-  freq: 38kHz
-
 remote_transmitter.transmit_raw:
   carrier_frequency: ${freq}
   repeat:
