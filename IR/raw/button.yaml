@@ -1,0 +1,18 @@
+---
+substitutions:
+  button_icon: "mdi:emoticon-outline"
+  times: "1"
+  wait: "15ms"
+  carrier_frequency: 38kHz
+  
+button:
+  - platform: template
+    name: "${button_name} Button"
+    icon: ${button_icon}
+    on_press:
+      remote_transmitter.transmit_pronto:
+        code: ${code}
+        repeat:
+          times: ${times}
+          wait_time: ${wait}
+
