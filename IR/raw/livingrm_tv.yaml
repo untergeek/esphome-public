@@ -32,5 +32,9 @@ substitutions:
 #      <<: !include "upstairs_tv/mute.yaml"
 
 button:
-  <<: !include upstairs_tv/power.yaml
+  - platform: template
+    name: Power Button
+    icon: mdi:power
+    on_press:
+      <<: !include upstairs_tv/power.yaml
 
