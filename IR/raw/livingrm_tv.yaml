@@ -5,36 +5,25 @@ substitutions:
   wait: "15ms"
   freq: 38kHz 
 
-#packages:
-#  power: !include
-#    file: button.yaml
-#    vars:
-#      button_name: Power
-#      button_icon: "mdi:power"
-#     # <<: !include "upstairs_tv/power.yaml"
-#  vol_up: !include
-#    file: button.yaml
-#    vars:
-#      button_name: Volume Up
-#      button_icon: "mdi:volume-plus"
-#      <<: !include "upstairs_tv/vol_up.yaml"
-#  vol_down: !include
-#    file: button.yaml
-#    vars:
-#      button_name: Volume Down
-#      button_icon: "mdi:volume-minus"
-#      <<: !include "upstairs_tv/vol_down.yaml"
-#  mute: !include
-#    file: button.yaml
-#    vars:
-#      button_name: Mute
-#      button_icon: "mdi:volume-mute"
-#      <<: !include "upstairs_tv/mute.yaml"
-
 button:
   - platform: template
     name: Power Button
     icon: mdi:power
     on_press:
       <<: !include {file: upstairs_tv/power.yaml, vars: {reps: $reps, wait: $wait, freq: $freq}}
+  - platform: template
+    name: Volume Up
+    icon: mdi:volume-plus
+    on_press:
+      <<: !include {file: upstairs_tv/vol_up.yaml, vars: {reps: $reps, wait: $wait, freq: $freq}}
+  - platform: template
+    name: Volume Down
+    icon: mdi:volume-minus
+    on_press:
+      <<: !include {file: upstairs_tv/vol_down.yaml, vars: {reps: $reps, wait: $wait, freq: $freq}}
+  - platform: template
+    name: Mute
+    icon: mdi:volume-mute
+    on_press:
+      <<: !include {file: upstairs_tv/mute.yaml, vars: {reps: $reps, wait: $wait, freq: $freq}}
 
