@@ -1,18 +1,19 @@
 ---
 substitutions:
   button_icon: "mdi:emoticon-outline"
-  times: "1"
+  reps: "1"
   wait: "15ms"
-  carrier_frequency: 38kHz
+  freq: 38kHz
   
 button:
   - platform: template
     name: "${button_name} Button"
     icon: ${button_icon}
     on_press:
-      remote_transmitter.transmit_pronto:
+      remote_transmitter.transmit_raw:
+        carrier_frequency: ${freq}
         code: ${code}
         repeat:
-          times: ${times}
+          times: ${reps}
           wait_time: ${wait}
 
