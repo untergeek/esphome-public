@@ -1,0 +1,32 @@
+output:
+  - platform: gpio
+    id: led1
+    pin: GPIO13
+    inverted: True
+
+switch:
+  # Restart the device, if selected
+  - platform: restart
+    name: "Restart '${friendly_name}'"
+    id: "restart_${devicename}"
+  # The actual switch
+  - platform: gpio
+    id: relay1
+    name: "${friendly_name} Switch"
+    pin: GPIO12
+    restore_mode: RESTORE_DEFAULT_OFF
+    on_turn_on:
+      then:
+        - output.turn_on: led1
+    on_turn_off:
+      then:
+        - output.turn_off: led1
+
+binary_sensor:
+  - platform: gpio
+    internal: true
+    name: "${friendly_name} Button"
+    pin: GPIO0
+    on_press:
+      then:
+        - switch.toggle: relay1
