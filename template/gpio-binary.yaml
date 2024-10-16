@@ -1,0 +1,11 @@
+---
+binary_sensor:
+  - platform: gpio
+    name: "${friendly_name} Sensor"
+    pin:
+      number: $gpio_pin
+      inverted: $gpio_inverted
+      mode: $gpio_mode
+    device_class: $dev_class
+    filters:
+      - delayed_off: $debounce_time
