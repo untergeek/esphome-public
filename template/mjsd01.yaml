@@ -65,7 +65,7 @@ output:
 light:
   - platform: monochromatic
     # https://esphome.io/components/light/monochromatic.html
-    name: ${devicename}
+    name: ${friendly_name}
     icon: ${icon}
     output: pwm
     default_transition_length: ${no_delay}
@@ -89,7 +89,7 @@ binary_sensor:
       number: GPIO0
       inverted: True
       mode: INPUT_PULLUP
-    name: ${devicename} Up Button
+    name: ${friendly_name} Up Button
     id: up_button
     internal: True
     on_press:
@@ -117,7 +117,7 @@ binary_sensor:
       number: GPIO1
       inverted: True
       mode: INPUT_PULLUP
-    name: ${devicename} Down Button
+    name: ${friendly_name} Down Button
     internal: True
     on_press:
       then:
@@ -143,7 +143,7 @@ binary_sensor:
     pin:
       number: GPIO15
       mode: INPUT_PULLUP
-    name: ${devicename} Main Button
+    name: ${friendly_name} Main Button
     internal: True
     on_press:
       - light.toggle: dimmer
