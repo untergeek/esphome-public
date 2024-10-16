@@ -14,6 +14,7 @@ packages:
   logs: !include ../logging.yaml
 
 substitutions:
+  icon: mdi:lightbulb
   cold: "6500 K"
   warm: "2700 K"
   gamma: "0.0"
@@ -63,6 +64,7 @@ output:
 light:
   - platform: rgbww
     name: "${friendly_name}"
+    icon: ${icon}
     color_interlock: true
     restore_mode: ${restore_mode}
     red: output_red
