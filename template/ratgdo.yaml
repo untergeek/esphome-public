@@ -18,7 +18,7 @@ packages:
     refresh: 1s
 
 substitutions:
-  id_prefix: ratgdo
+  id_prefix: rgdo
   restore: "True"
   log_baud: "115200"
   uart_tx_pin: D1
