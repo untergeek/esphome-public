@@ -1,0 +1,29 @@
+---
+output:
+  - platform: gpio
+    id: ${led_id}
+    pin: ${led_pin}
+    inverted: True
+
+switch:
+  - platform: gpio
+    id: ${relay_id}
+    name: "${friendly_name} Switch"
+    icon: ${icon}
+    pin: ${relay_pin}
+    restore_mode: RESTORE_DEFAULT_OFF
+    on_turn_on:
+      then:
+        - output.turn_on: ${led_id}
+    on_turn_off:
+      then:
+        - output.turn_off: ${led_id}
+
+binary_sensor:
+  - platform: gpio
+    internal: true
+    name: "${friendly_name} Button"
+    pin: ${button_pin}
+    on_press:
+      then:
+        - switch.toggle: ${relay_id}

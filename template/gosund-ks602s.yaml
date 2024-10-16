@@ -4,7 +4,7 @@ packages:
   main: !include
     file: ../esphome.yaml
     vars:
-      project_name: untergeek.kesen-ks602
+      project_name: untergeek.gosund-ks602
       project_version: 1.0.0
   chip: !include
     file: ../esp8266.yaml
@@ -18,7 +18,14 @@ packages:
     vars:
       icon: "mdi:light-switch"
       led_id: led1
-      led_pin: GPIO13
+      led_pin: GPIO16
       relay_id: relay1
-      relay_pin: GPIO12
+      relay_pin: GPIO14
       button_pin: GPIO0
+
+# The status_led is part of the gosund-ks602s, but not the generic ks602 parent
+
+status_led:
+  pin:
+    number: GPIO2
+    inverted: True
