@@ -1,9 +1,24 @@
 ---
+packages:
+  main: !include
+    file: ../esphome.yaml
+    vars:
+      project_name: ratgdo.esphome
+      project_version: "2.5"
+  chip: !include
+    file: ../esp8266.yaml
+    vars:
+      board: d1_mini
+  sync: !include ../time.yaml
+  logs: !include ../logging.yaml
+  remote_package:
+    url: https://github.com/ratgdo/esphome-ratgdo
+    files:
+      - base.yaml
+    refresh: 1s
+
 substitutions:
-  project_name: ratgdo.esphome
-  project_version: "2.5"
   id_prefix: $hostname
-  board: d1_mini
   restore: "True"
   log_baud: "115200"
   uart_tx_pin: D1
@@ -14,16 +29,6 @@ substitutions:
   dry_contact_open_pin: D5
   dry_contact_close_pin: D6
   dry_contact_light_pin: D3
-
-packages:
-  main: !include ../esp8266.yaml
-  sync: !include ../time.yaml
-  logs: !include ../logging.yaml
-  remote_package:
-    url: https://github.com/ratgdo/esphome-ratgdo
-    files:
-      - base.yaml
-    refresh: 1s
 
 dashboard_import:
   package_import_url: github://ratgdo/esphome-ratgdo/v25board_esp8266_d1_mini.yaml@main
