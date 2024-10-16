@@ -1,5 +1,10 @@
 ---
 packages:
+  remote_package:
+    url: https://github.com/ratgdo/esphome-ratgdo
+    files:
+      - base.yaml
+    refresh: 1s
   main: !include
     file: ../esphome.yaml
     vars:
@@ -11,11 +16,6 @@ packages:
       board: d1_mini
   sync: !include ../time.yaml
   logs: !include ../logging.yaml
-  remote_package:
-    url: https://github.com/ratgdo/esphome-ratgdo
-    files:
-      - base.yaml
-    refresh: 1s
 
 substitutions:
   id_prefix: rgdo
