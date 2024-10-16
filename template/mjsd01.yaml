@@ -66,6 +66,7 @@ light:
   - platform: monochromatic
     # https://esphome.io/components/light/monochromatic.html
     name: ${devicename}
+    icon: ${icon}
     output: pwm
     default_transition_length: ${no_delay}
     id: dimmer
