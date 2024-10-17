@@ -15,6 +15,7 @@ packages:
   logs: !include ../logging.yaml
 
 substitutions:
+  light_id: dimmer
   icon: "mdi:light-switch"
   min: "10"
   max: "1000"
@@ -47,7 +48,7 @@ tuya:
 
 light:
   - platform: "tuya"
-    id: dimmer
+    id: ${light_id}
     icon: ${icon}
     name: "${friendly_name}"
     dimmer_datapoint: 2
