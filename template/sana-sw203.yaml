@@ -22,7 +22,7 @@ substitutions:
   icon1: mdi:toggle-switch-variant
   name2: "Middle Switch"
   icon2: mdi:toggle-switch-variant
-  name3: "Bottom Swiwtch"
+  name3: "Bottom Switch"
   icon3: mdi:toggle-switch-variant
 
 status_led:
