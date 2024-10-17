@@ -53,7 +53,7 @@ binary_sensor:
       mode: INPUT_PULLUP
     on_press:
       then:
-        - switch.toggle: relay1
+        - switch.toggle: ${id1}
   - platform: gpio
     internal: true
     name: "${friendly_name} Button 2"
@@ -62,7 +62,7 @@ binary_sensor:
       mode: INPUT_PULLUP
     on_press:
       then:
-        - switch.toggle: relay2
+        - switch.toggle: ${id2}
   - platform: gpio
     internal: true
     name: "${friendly_name} Button 3"
@@ -71,4 +71,4 @@ binary_sensor:
       mode: INPUT_PULLUP
     on_press:
       then:
-        - switch.toggle: relay3
+        - switch.toggle: ${id3}
