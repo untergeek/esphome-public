@@ -19,8 +19,11 @@ substitutions:
   id2: relay2
   id3: relay3
   name1: "Top Switch"
+  icon1: mdi:toggle-switch-variant
   name2: "Middle Switch"
+  icon2: mdi:toggle-switch-variant
   name3: "Bottom Swiwtch"
+  icon3: mdi:toggle-switch-variant
 
 status_led:
   pin:
@@ -31,16 +34,19 @@ switch:
   - platform: gpio
     id: ${id1}
     name: ${name1}
+    icon: ${icon1}
     pin: GPIO13
     restore_mode: RESTORE_DEFAULT_OFF
   - platform: gpio
     id: ${id2}
     name: ${name2}
+    icon: ${icon2}
     pin: GPIO15
     restore_mode: RESTORE_DEFAULT_OFF
   - platform: gpio
     id: ${id3}
     name: ${name3}
+    icon: ${icon3}
     pin: GPIO4
     restore_mode: RESTORE_DEFAULT_OFF
 
