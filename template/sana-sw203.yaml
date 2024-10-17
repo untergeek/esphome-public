@@ -1,0 +1,74 @@
+---
+# We track the project name and version here in the template
+packages:
+  main: !include
+    file: ../esphome.yaml
+    vars:
+      project_name: untergeek.sana_sw203
+      project_version: 1.0.0
+  chip: !include
+    file: ../esp8266.yaml
+    vars:
+      board: esp01_1m
+  sync: !include ../time.yaml
+  togl: !include ../restart_switch.yaml
+  logs: !include ../logging.yaml
+
+substitutions:
+  id1: relay1
+  id2: relay2
+  id3: relay3
+  name1: "Top Switch"
+  name2: "Middle Switch"
+  name3: "Bottom Swiwtch"
+
+status_led:
+  pin:
+    number: GPIO0
+    inverted: True
+
+switch:
+  - platform: gpio
+    id: ${id1}
+    name: ${name1}
+    pin: GPIO13
+    restore_mode: RESTORE_DEFAULT_OFF
+  - platform: gpio
+    id: ${id2}
+    name: ${name2}
+    pin: GPIO15
+    restore_mode: RESTORE_DEFAULT_OFF
+  - platform: gpio
+    id: ${id3}
+    name: ${name3}
+    pin: GPIO4
+    restore_mode: RESTORE_DEFAULT_OFF
+
+binary_sensor:
+  - platform: gpio
+    internal: true
+    name: "${friendly_name} Button 1"
+    pin:
+      number: GPIO12
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - switch.toggle: relay1
+  - platform: gpio
+    internal: true
+    name: "${friendly_name} Button 2"
+    pin:
+      number: GPIO5
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - switch.toggle: relay2
+  - platform: gpio
+    internal: true
+    name: "${friendly_name} Button 3"
+    pin:
+      number: GPIO3
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - switch.toggle: relay3
