@@ -7,16 +7,19 @@ switch:
     optimistic: True
     # pronto older_candles already have 15 code repeats built-in
     turn_on_action:
-      - <<: !include pronto/older_candles/on.yaml
+      - remote_transmitter.transmit_pronto:
+          <<: !include pronto/older_candles/on.yaml
     turn_off_action:
-      - <<: !include pronto/older_candles/off.yaml
+      - remote_transmitter.transmit_pronto:
+          <<: !include pronto/older_candles/off.yaml
 
 button:
   - platform: template
     name: Forcibly Send OFF
     on_press:
       then:
-        - <<: !include pronto/older_candles/off.yaml
+        - remote_transmitter.transmit_pronto:
+            <<: !include pronto/older_candles/off.yaml
         - switch.template.publish: # Also turn OFF the associated switch
           id: older
           state: OFF
@@ -24,7 +27,8 @@ button:
     name: Forcibly Send ON
     on_press:
       then:
-        - <<: !include pronto/older_candles/on.yaml
+        - remote_transmitter.transmit_pronto:
+            <<: !include pronto/older_candles/on.yaml
         - switch.template.publish: # Also turn ON the associated switch
           id: older
           state: ON
