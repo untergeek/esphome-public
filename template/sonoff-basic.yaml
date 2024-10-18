@@ -1,0 +1,41 @@
+---
+# We track the project name and version here in the template
+packages:
+  main: !include
+    file: ../esphome.yaml
+    vars:
+      project_name: untergeek.sonoff-basic
+      project_version: 1.0.0
+  chip: !include
+    file: ../esp8266.yaml
+    vars:
+      board: esp01_1m
+  sync: !include ../time.yaml
+  togl: !include ../restart_switch.yaml
+  logs: !include ../logging.yaml
+
+substitutions:
+  icon: "phu:smart-switch"
+
+switch:
+  - platform: gpio
+    id: relay1
+    name: "${friendly_name}"
+    pin: GPIO12
+    restore_mode: RESTORE_DEFAULT_OFF
+
+binary_sensor:
+  - platform: gpio
+    internal: true
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "${friendly_name} Button"
+    on_press:
+      - switch.toggle: relay1
+
+status_led:
+  pin:
+    number: GPIO13
+    inverted: yes
