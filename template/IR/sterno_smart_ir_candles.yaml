@@ -1,14 +1,14 @@
 ---
 # Sterno Smart Candles IR Control
 # vars:
-#   candle_name: 
+#   smart_candle_name: 
  
 substitutions:
-  candle_name: Sterno Smart Candles
+  smart_candle_name: Sterno Smart Candles
 
 switch:
   - platform: template
-    name: "${candle_name}"
+    name: "${smart_candle_name}"
     id: sterno_candles
     optimistic: True
     turn_on_action:
@@ -46,7 +46,7 @@ switch:
           id: sterno_candles
           state: OFF
   - platform: template
-    name: "${candle_name} - Hi/Lo Dimmer"
+    name: "${smart_candle_name} - Hi/Lo Dimmer"
     # Counterintuitive, perhaps. But when the dimmer is ON, the lights are dim.
     id: sterno_dimmer
     turn_on_action: # If not on, turn ON the candles, then turn ON dimming
@@ -73,3 +73,21 @@ switch:
         repeat:
           times: 3
           wait_time: 0ms
+
+button:
+  - platform: template
+    name: Forcibly Send OFF
+    on_press:
+      then:
+        - <<: !include pronto/sterno_candles/off.yaml
+        - switch.template.publish: # Also turn OFF the associated switch
+          id: sterno_candles
+          state: OFF
+  - platform: template
+    name: Forcibly Send ON
+    on_press:
+      then:
+        - <<: !include pronto/sterno_candles/on.yaml
+        - switch.template.publish: # Also turn ON the associated switch
+          id: sterno_candles
+          state: ON
