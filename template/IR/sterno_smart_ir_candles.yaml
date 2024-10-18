@@ -28,7 +28,7 @@ switch:
             times: 3
             wait_time: 0ms
       - switch.template.publish: # Turn ON the parent switch
-          id: any
+          id: sterno_candles
           state: ON
       - switch.template.publish: # When turning on the candles, set the dimmer state to OFF just in case
           id: sterno_dimmer
@@ -43,7 +43,7 @@ switch:
           id: sterno_dimmer
           state: OFF
       - switch.template.publish: # Turn off the parent switch
-          id: any
+          id: sterno_candles
           state: OFF
   - platform: template
     name: "${candle_name} - Hi/Lo Dimmer"
