@@ -24,7 +24,7 @@ switch:
     optimistic: True
     turn_on_action:
       - remote_transmitter.transmit_pronto:
-          <<: !include pronto/${smart_candle_pfx}_candles/on.yaml
+          <<: !include pronto/sterno_candles/on.yaml
           repeat:
             times: 3
             wait_time: 0ms
@@ -36,7 +36,7 @@ switch:
           state: OFF
     turn_off_action:
       - remote_transmitter.transmit_pronto:
-          <<: !include pronto/${smart_candle_pfx}_candles/off.yaml
+          <<: !include pronto/sterno_candles/off.yaml
           repeat:
             times: 3
             wait_time: 0ms
@@ -58,22 +58,38 @@ switch:
           then:
             - switch.turn_on: ${smart_candle_pfx}_smart
             - remote_transmitter.transmit_pronto:
-                <<: !include pronto/${smart_candle_pfx}_candles/low_light.yaml
+                <<: !include pronto/sterno_candles/low_light.yaml
                 repeat:
                   times: 3
                   wait_time: 0ms
           else:
             remote_transmitter.transmit_pronto:
-              <<: !include pronto/${smart_candle_pfx}_candles/low_light.yaml
+              <<: !include pronto/sterno_candles/low_light.yaml
               repeat:
                 times: 3
                 wait_time: 0ms
     turn_off_action:
       remote_transmitter.transmit_pronto:
-        <<: !include pronto/${smart_candle_pfx}_candles/high_light.yaml
+        <<: !include pronto/sterno_candles/high_light.yaml
         repeat:
           times: 3
           wait_time: 0ms
+
+script:
+  - id: ${smart_candle_pfx}_off_script
+    then:
+      - remote_transmitter.transmit_pronto:
+            <<: !include pronto/sterno_candles/off.yaml
+      - switch.template.publish: # Also turn OFF the associated switch
+        id: ${smart_candle_pfx}_candles
+        state: OFF
+  - id: ${smart_candle_pfx}_on_script
+    then:
+      - remote_transmitter.transmit_pronto:
+            <<: !include pronto/sterno_candles/on.yaml
+      - switch.template.publish: # Also turn OFF the associated switch
+        id: ${smart_candle_pfx}_candles
+        state: ON
 
 button:
   - platform: template
@@ -81,18 +97,12 @@ button:
     id: ${smart_candle_pfx}_off_button
     on_press:
       then:
-        - remote_transmitter.transmit_pronto:
-            <<: !include pronto/${smart_candle_pfx}_candles/off.yaml
-        - switch.template.publish: # Also turn OFF the associated switch
-          id: ${smart_candle_pfx}_candles
-          state: OFF
+        - script.execute:
+            id: ${smart_candle_pfx}_off_script
   - platform: template
     name: Forcibly Send ON
     id: ${smart_candle_pfx}_on_button
     on_press:
       then:
-        - remote_transmitter.transmit_pronto:
-            <<: !include pronto/${smart_candle_pfx}_candles/on.yaml
-        - switch.template.publish: # Also turn ON the associated switch
-          id: ${smart_candle_pfx}_candles
-          state: ON
+        - script.execute:
+            id: ${smart_candle_pfx}_on_script
