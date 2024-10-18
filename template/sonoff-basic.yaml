@@ -20,6 +20,7 @@ substitutions:
 switch:
   - platform: gpio
     id: relay1
+    icon: ${icon}
     name: "${friendly_name}"
     pin: GPIO12
     restore_mode: RESTORE_DEFAULT_OFF
