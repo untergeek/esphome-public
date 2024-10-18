@@ -32,7 +32,7 @@
 
 binary_sensor:
   - platform: gpio
-    name: "${switch_name} Sensor"
+    name: "${switch_name}"
     pin:
       number: $gpio_pin
       inverted: $gpio_inverted
