@@ -79,7 +79,8 @@ button:
     name: Forcibly Send OFF
     on_press:
       then:
-        - <<: !include pronto/sterno_candles/off.yaml
+        - remote_transmitter.transmit_pronto:
+            <<: !include pronto/sterno_candles/off.yaml
         - switch.template.publish: # Also turn OFF the associated switch
           id: sterno_candles
           state: OFF
@@ -87,7 +88,8 @@ button:
     name: Forcibly Send ON
     on_press:
       then:
-        - <<: !include pronto/sterno_candles/on.yaml
+        - remote_transmitter.transmit_pronto:
+            <<: !include pronto/sterno_candles/on.yaml
         - switch.template.publish: # Also turn ON the associated switch
           id: sterno_candles
           state: ON
