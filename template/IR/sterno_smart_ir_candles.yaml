@@ -81,15 +81,15 @@ script:
       - remote_transmitter.transmit_pronto:
             <<: !include pronto/sterno_candles/off.yaml
       - switch.template.publish: # Also turn OFF the associated switch
-        id: ${smart_candle_pfx}_candles
-        state: OFF
+          id: ${smart_candle_pfx}_candles
+          state: OFF
   - id: ${smart_candle_pfx}_on_script
     then:
       - remote_transmitter.transmit_pronto:
             <<: !include pronto/sterno_candles/on.yaml
       - switch.template.publish: # Also turn OFF the associated switch
-        id: ${smart_candle_pfx}_candles
-        state: ON
+          id: ${smart_candle_pfx}_candles
+          state: ON
 
 button:
   - platform: template
