@@ -1,0 +1,75 @@
+---
+# Sterno Smart Candles IR Control
+# vars:
+#   candle_name: 
+ 
+substitutions:
+  candle_name: Sterno Smart Candles
+
+switch:
+  - platform: template
+    name: "${candle_name}"
+    id: sterno_candles
+    optimistic: True
+    turn_on_action:
+      - switch.turn_on: sterno_smart
+    turn_off_action:
+      - switch.turn_off: sterno_smart
+
+  - platform: template
+    name: "Sterno Smart Candles"
+    id: sterno_smart
+    internal: True
+    optimistic: True
+    turn_on_action:
+      - remote_transmitter.transmit_pronto:
+          <<: !include pronto/sterno_candles/on.yaml
+          repeat:
+            times: 3
+            wait_time: 0ms
+      - switch.template.publish: # Turn ON the parent switch
+          id: any
+          state: ON
+      - switch.template.publish: # When turning on the candles, set the dimmer state to OFF just in case
+          id: sterno_dimmer
+          state: OFF
+    turn_off_action:
+      - remote_transmitter.transmit_pronto:
+          <<: !include pronto/sterno_candles/off.yaml
+          repeat:
+            times: 3
+            wait_time: 0ms
+      - switch.template.publish: # Always turn off the dimmer with the candles
+          id: sterno_dimmer
+          state: OFF
+      - switch.template.publish: # Turn off the parent switch
+          id: any
+          state: OFF
+  - platform: template
+    name: "${candle_name} - Hi/Lo Dimmer"
+    # Counterintuitive, perhaps. But when the dimmer is ON, the lights are dim.
+    id: sterno_dimmer
+    turn_on_action: # If not on, turn ON the candles, then turn ON dimming
+      - if:
+          condition:
+            not:
+              lambda: 'return id(sterno_smart).state;'
+          then:
+            - switch.turn_on: sterno_smart
+            - remote_transmitter.transmit_pronto:
+                <<: !include pronto/sterno_candles/low_light.yaml
+                repeat:
+                  times: 3
+                  wait_time: 0ms
+          else:
+            remote_transmitter.transmit_pronto:
+              <<: !include pronto/sterno_candles/low_light.yaml
+              repeat:
+                times: 3
+                wait_time: 0ms
+    turn_off_action:
+      remote_transmitter.transmit_pronto:
+        <<: !include pronto/sterno_candles/high_light.yaml
+        repeat:
+          times: 3
+          wait_time: 0ms

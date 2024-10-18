@@ -10,20 +10,19 @@ button:
     name: Power Button
     icon: mdi:power
     on_press:
-      <<: !include {file: upstairs_tv/power.yaml, vars: {reps: $reps, wait: $wait, freq: $freq}}
+      <<: !include {file: raw/upstairs_tv/power.yaml, vars: {reps: $reps, wait: $wait, freq: $freq}}
   - platform: template
     name: Volume Up
     icon: mdi:volume-plus
     on_press:
-      <<: !include {file: upstairs_tv/vol_up.yaml, vars: {reps: $reps, wait: $wait, freq: $freq}}
+      <<: !include {file: raw/upstairs_tv/vol_up.yaml, vars: {reps: $reps, wait: $wait, freq: $freq}}
   - platform: template
     name: Volume Down
     icon: mdi:volume-minus
     on_press:
-      <<: !include {file: upstairs_tv/vol_down.yaml, vars: {reps: $reps, wait: $wait, freq: $freq}}
+      <<: !include {file: raw/upstairs_tv/vol_down.yaml, vars: {reps: $reps, wait: $wait, freq: $freq}}
   - platform: template
     name: Mute
     icon: mdi:volume-mute
     on_press:
-      <<: !include {file: upstairs_tv/mute.yaml, vars: {reps: $reps, wait: $wait, freq: $freq}}
-
+      <<: !include {file: raw/upstairs_tv/mute.yaml, vars: {reps: $reps, wait: $wait, freq: $freq}}

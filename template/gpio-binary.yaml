@@ -1,7 +1,38 @@
 ---
+# Sub-device template. Can identify multiple on one device using vars:
+# packages:
+#   local: !include ../common/.local.yaml
+#   reed_switches:
+#     url: https://github.com/untergeek/esphome-public
+#     ref: main
+#     refresh: 1s
+#     files:
+#       - template/gpio-binary.yaml
+#     vars:
+#       switch_name: reed_switch_1
+#       gpio_pin: PIN_ID
+#       gpio_inverted: BOOL_VAL
+#       gpio_mode: MODE_VAL
+#       dev_class: DEVICE_CLASS
+#       debounce_time: DEBOUNCE_VAL
+#     vars:
+#       switch_name: reed_switch_2
+#       gpio_pin: PIN_ID
+#       gpio_inverted: BOOL_VAL
+#       gpio_mode: MODE_VAL
+#       dev_class: DEVICE_CLASS
+#       debounce_time: DEBOUNCE_VAL
+#     vars:
+#       switch_name: reed_switch_3
+#       gpio_pin: PIN_ID
+#       gpio_inverted: BOOL_VAL
+#       gpio_mode: MODE_VAL
+#       dev_class: DEVICE_CLASS
+#       debounce_time: DEBOUNCE_VAL
+
 binary_sensor:
   - platform: gpio
-    name: "${friendly_name} Sensor"
+    name: "${switch_name} Sensor"
     pin:
       number: $gpio_pin
       inverted: $gpio_inverted
