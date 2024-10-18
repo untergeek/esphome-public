@@ -1,11 +1,16 @@
 ---
 # Older-style Candles (no dancing wick) IR Control
+
+substitutions:
+  candle_name: Older Candles
+  candle_pfx: older
+
 switch:
   - platform: template
     name: "Older Candles"
-    id: older
+    id: ${candle_pfx}_candles
     optimistic: True
-    # pronto older_candles already have 15 code repeats built-in
+    # pronto/older_candles files already have 15 code repeats built-in
     turn_on_action:
       - remote_transmitter.transmit_pronto:
           <<: !include pronto/older_candles/on.yaml
@@ -16,19 +21,21 @@ switch:
 button:
   - platform: template
     name: Forcibly Send OFF
+    id: ${candle_pfx}_on_button
     on_press:
       then:
         - remote_transmitter.transmit_pronto:
             <<: !include pronto/older_candles/off.yaml
         - switch.template.publish: # Also turn OFF the associated switch
-          id: older
+          id: ${candle_pfx}_candles
           state: OFF
   - platform: template
     name: Forcibly Send ON
+    id: ${candle_pfx}_on_button
     on_press:
       then:
         - remote_transmitter.transmit_pronto:
             <<: !include pronto/older_candles/on.yaml
         - switch.template.publish: # Also turn ON the associated switch
-          id: older
+          id: ${candle_pfx}_candles
           state: ON

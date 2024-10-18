@@ -5,71 +5,72 @@
  
 substitutions:
   smart_candle_name: Sterno Smart Candles
+  smart_candle_pfx: sterno 
 
 switch:
   - platform: template
     name: "${smart_candle_name}"
-    id: sterno_candles
+    id: ${smart_candle_pfx}_candles
     optimistic: True
     turn_on_action:
-      - switch.turn_on: sterno_smart
+      - switch.turn_on: ${smart_candle_pfx}_smart
     turn_off_action:
-      - switch.turn_off: sterno_smart
+      - switch.turn_off: ${smart_candle_pfx}_smart
 
   - platform: template
     name: "Sterno Smart Candles"
-    id: sterno_smart
+    id: ${smart_candle_pfx}_smart
     internal: True
     optimistic: True
     turn_on_action:
       - remote_transmitter.transmit_pronto:
-          <<: !include pronto/sterno_candles/on.yaml
+          <<: !include pronto/${smart_candle_pfx}_candles/on.yaml
           repeat:
             times: 3
             wait_time: 0ms
       - switch.template.publish: # Turn ON the parent switch
-          id: sterno_candles
+          id: ${smart_candle_pfx}_candles
           state: ON
       - switch.template.publish: # When turning on the candles, set the dimmer state to OFF just in case
-          id: sterno_dimmer
+          id: ${smart_candle_pfx}_dimmer
           state: OFF
     turn_off_action:
       - remote_transmitter.transmit_pronto:
-          <<: !include pronto/sterno_candles/off.yaml
+          <<: !include pronto/${smart_candle_pfx}_candles/off.yaml
           repeat:
             times: 3
             wait_time: 0ms
       - switch.template.publish: # Always turn off the dimmer with the candles
-          id: sterno_dimmer
+          id: ${smart_candle_pfx}_dimmer
           state: OFF
       - switch.template.publish: # Turn off the parent switch
-          id: sterno_candles
+          id: ${smart_candle_pfx}_candles
           state: OFF
   - platform: template
     name: "${smart_candle_name} - Hi/Lo Dimmer"
     # Counterintuitive, perhaps. But when the dimmer is ON, the lights are dim.
-    id: sterno_dimmer
+    id: ${smart_candle_pfx}_dimmer
     turn_on_action: # If not on, turn ON the candles, then turn ON dimming
       - if:
           condition:
             not:
-              lambda: 'return id(sterno_smart).state;'
+              lambda: 'return id(${smart_candle_pfx}_smart).state;'
           then:
-            - switch.turn_on: sterno_smart
+            - switch.turn_on: ${smart_candle_pfx}_smart
             - remote_transmitter.transmit_pronto:
-                <<: !include pronto/sterno_candles/low_light.yaml
+                <<: !include pronto/${smart_candle_pfx}_candles/low_light.yaml
                 repeat:
                   times: 3
                   wait_time: 0ms
           else:
             remote_transmitter.transmit_pronto:
-              <<: !include pronto/sterno_candles/low_light.yaml
+              <<: !include pronto/${smart_candle_pfx}_candles/low_light.yaml
               repeat:
                 times: 3
                 wait_time: 0ms
     turn_off_action:
       remote_transmitter.transmit_pronto:
-        <<: !include pronto/sterno_candles/high_light.yaml
+        <<: !include pronto/${smart_candle_pfx}_candles/high_light.yaml
         repeat:
           times: 3
           wait_time: 0ms
@@ -77,19 +78,21 @@ switch:
 button:
   - platform: template
     name: Forcibly Send OFF
+    id: ${smart_candle_pfx}_off_button
     on_press:
       then:
         - remote_transmitter.transmit_pronto:
-            <<: !include pronto/sterno_candles/off.yaml
+            <<: !include pronto/${smart_candle_pfx}_candles/off.yaml
         - switch.template.publish: # Also turn OFF the associated switch
-          id: sterno_candles
+          id: ${smart_candle_pfx}_candles
           state: OFF
   - platform: template
     name: Forcibly Send ON
+    id: ${smart_candle_pfx}_on_button
     on_press:
       then:
         - remote_transmitter.transmit_pronto:
-            <<: !include pronto/sterno_candles/on.yaml
+            <<: !include pronto/${smart_candle_pfx}_candles/on.yaml
         - switch.template.publish: # Also turn ON the associated switch
-          id: sterno_candles
+          id: ${smart_candle_pfx}_candles
           state: ON
