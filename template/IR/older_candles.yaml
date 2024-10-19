@@ -36,14 +36,14 @@ script:
 
 button:
   - platform: template
-    name: Forcibly Send OFF
+    name: ${candle_name} Forcibly Send OFF
     id: ${candle_pfx}_off_button
     on_press:
       then:
         - script.execute:
             id: ${candle_pfx}_off_script
   - platform: template
-    name: Forcibly Send ON
+    name: ${candle_name} Forcibly Send ON
     id: ${candle_pfx}_on_button
     on_press:
       then:
