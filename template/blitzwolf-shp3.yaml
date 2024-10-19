@@ -1,0 +1,108 @@
+---
+packages:
+  main: !include
+    file: ../esphome.yaml
+    vars:
+      project_name: untergeek.blitzwolf-shp3
+      project_version: 1.0.0
+  chip: !include
+    file: ../esp8266.yaml
+    vars:
+      board: esp01_1m
+  sync: !include ../time.yaml
+  togl: !include ../restart_switch.yaml
+  logs: !include ../logging.yaml
+
+substitutions:
+  icon: mdi:power-socket-us
+  current_res: "0.00221" # Arbitrary value. Requires power monitoring calibration
+  voltage_div: "955" # Arbitrary value. Requires power monitoring calibration
+  restore_mode: RESTORE_DEFAULT_OFF
+
+sensor:
+  # Reports the Current, Voltage, and Power used by the plugged-in device
+  - platform: hlw8012
+    sel_pin:
+      number: GPIO12
+      inverted: true
+    cf_pin: GPIO5
+    cf1_pin: GPIO14
+    change_mode_every: 8
+    update_interval: 10s
+    current:
+      name: ${friendly_name} Amperage
+      icon: mdi:current-ac
+      unit_of_measurement: A
+    voltage:
+      name: ${friendly_name} Voltage
+      icon: mdi:lightning-bolt
+      unit_of_measurement: V
+    power:
+      id: wattage
+      name: ${friendly_name} Wattage
+      icon: mdi:lightning-bolt-circle
+      unit_of_measurement: W
+    current_resistor: ${current_res}
+    voltage_divider: ${voltage_div}
+
+  # Reports the total Power so-far each day, resets at midnight, see https://esphome.io/components/sensor/total_daily_energy.html
+  - platform: total_daily_energy
+    name: ${friendly_name} Total Daily Energy
+    icon: mdi:meter-electric
+    power_id: wattage
+    filters:
+      # Multiplication factor from W to kW is 0.001
+      - multiply: 0.001
+    unit_of_measurement: kWh
+
+binary_sensor:
+  - platform: gpio
+    device_class: power
+    internal: true
+    pin:
+      number: GPIO16
+#      mode: INPUT_PULLUP
+    name: ${friendly_name} Right Button
+    on_press:
+      - switch.toggle: relay1
+  - platform: gpio
+    device_class: power
+    internal: true
+    pin:
+      number: GPIO13
+      mode: INPUT_PULLUP
+    name: ${friendly_name} Left Button
+    on_press:
+      - switch.toggle: relay2
+
+switch:
+  - platform: gpio
+    name: "${friendly_name} Right Outlet"
+    icon: "${icon}"
+    pin: GPIO15
+    id: relay1
+    restore_mode: ${restore_mode}
+    on_turn_on:
+      then:
+        - output.turn_on: right_power_indicator
+    on_turn_off:
+      then:
+        - output.turn_off: right_power_indicator
+  - platform: gpio
+    name: "${friendly_name} Left Outlet"
+    icon: "${icon}"
+    pin: GPIO4
+    id: relay2
+    restore_mode: RESTORE_DEFAULT_ON
+
+output:
+- platform: gpio
+  id: right_power_indicator
+  pin:
+    number: GPIO00
+    inverted: True
+
+status_led:
+  pin:
+    number: GPIO02
+    inverted: True

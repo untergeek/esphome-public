@@ -75,24 +75,24 @@ switch:
           times: 3
           wait_time: 0ms
 
-button:
-  - platform: template
-    name: ${smart_candle_name} Forcibly Send OFF
-    id: ${smart_candle_pfx}_off_button
-    on_press:
-      then:
-        - remote_transmitter.transmit_pronto:
-              <<: !include pronto/sterno_candles/off.yaml
-        - switch.template.publish: # Also turn OFF the associated switch
-            id: ${smart_candle_pfx}_candles
-            state: OFF
-  - platform: template
-    name: ${smart_candle_name} Forcibly Send ON
-    id: ${smart_candle_pfx}_on_button
-    on_press:
-      then:
-        - remote_transmitter.transmit_pronto:
-              <<: !include pronto/sterno_candles/on.yaml
-        - switch.template.publish: # Also turn OFF the associated switch
-            id: ${smart_candle_pfx}_candles
-            state: ON
+# button:
+#   - platform: template
+#     name: ${smart_candle_name} Forcibly Send OFF
+#     id: ${smart_candle_pfx}_off_button
+#     on_press:
+#       then:
+#         - remote_transmitter.transmit_pronto:
+#               <<: !include pronto/sterno_candles/off.yaml
+#         - switch.template.publish: # Also turn OFF the associated switch
+#             id: ${smart_candle_pfx}_candles
+#             state: OFF
+#   - platform: template
+#     name: ${smart_candle_name} Forcibly Send ON
+#     id: ${smart_candle_pfx}_on_button
+#     on_press:
+#       then:
+#         - remote_transmitter.transmit_pronto:
+#               <<: !include pronto/sterno_candles/on.yaml
+#         - switch.template.publish: # Also turn OFF the associated switch
+#             id: ${smart_candle_pfx}_candles
+#             state: ON

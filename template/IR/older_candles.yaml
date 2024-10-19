@@ -34,24 +34,24 @@ switch:
   #         id: ${candle_pfx}_candles
   #         state: ON
 
-button:
-  - platform: template
-    name: ${candle_name} Forcibly Send OFF
-    id: ${candle_pfx}_off_button
-    on_press:
-      then:
-        - remote_transmitter.transmit_pronto:
-              <<: !include pronto/older_candles/off.yaml
-        - switch.template.publish: # Also turn OFF the associated switch
-            id: ${candle_pfx}_candles
-            state: OFF
-  - platform: template
-    name: ${candle_name} Forcibly Send ON
-    id: ${candle_pfx}_on_button
-    on_press:
-      then:
-        - remote_transmitter.transmit_pronto:
-              <<: !include pronto/older_candles/on.yaml
-        - switch.template.publish: # Also turn ON the associated switch
-            id: ${candle_pfx}_candles
-            state: ON
+# button:
+#   - platform: template
+#     name: ${candle_name} Forcibly Send OFF
+#     id: ${candle_pfx}_off_button
+#     on_press:
+#       then:
+#         - remote_transmitter.transmit_pronto:
+#               <<: !include pronto/older_candles/off.yaml
+#         - switch.template.publish: # Also turn OFF the associated switch
+#             id: ${candle_pfx}_candles
+#             state: OFF
+#   - platform: template
+#     name: ${candle_name} Forcibly Send ON
+#     id: ${candle_pfx}_on_button
+#     on_press:
+#       then:
+#         - remote_transmitter.transmit_pronto:
+#               <<: !include pronto/older_candles/on.yaml
+#         - switch.template.publish: # Also turn ON the associated switch
+#             id: ${candle_pfx}_candles
+#             state: ON
