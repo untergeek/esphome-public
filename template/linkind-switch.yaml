@@ -13,35 +13,31 @@ esp32:
     sdkconfig_options:
       CONFIG_FREERTOS_UNICORE: y    
 
-light:
-  - platform: binary
-    id: relaylight
-    name: ${friendly_name} Switch
-    output: relay
+switch:
+  - platform: gpio
+    name: Switch
+    id: relay
+    pin: GPIO5
+    inverted: false
     on_turn_on: 
       - output.turn_on:
           id: green_led
     on_turn_off:
       - output.turn_off: 
           id: green_led
-          
+
+light:    
   - platform: binary
     id: greenlight
     internal: true
     name: Green LED
-    output:  green_led
-    
+    output: green_led
   - platform: status_led
     internal: true
     name: Red LED
     pin: GPIO26
     
 output:
-  - platform: gpio
-    pin: GPIO5
-    inverted: false
-    id: relay
-
   - platform: gpio
     pin: GPIO14
     inverted: false
@@ -57,7 +53,7 @@ binary_sensor:
     name: ON Button
     internal: false
     on_click:
-      - light.turn_on: relaylight
+      - light.turn_on: relay
            
   - platform: gpio
     pin:
@@ -67,7 +63,7 @@ binary_sensor:
     name: OFF Button
     internal: False
     on_click:
-      - light.turn_off: relaylight
+      - light.turn_off: relay
 
 esp32_ble_tracker:
 
