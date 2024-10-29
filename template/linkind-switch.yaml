@@ -1,0 +1,75 @@
+---
+# Special odditiy that runs a weird, single-core ESP32 chip but still has BLE
+substitutions:
+  project_name: "untergeek.linkind_switch"
+  project_version: "1.0.0"
+
+<<: !include ../common.yaml
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_FREERTOS_UNICORE: y    
+
+light:
+  - platform: binary
+    id: relaylight
+    name: ${friendly_name} Switch
+    output: relay
+    on_turn_on: 
+      - output.turn_on:
+          id: green_led
+    on_turn_off:
+      - output.turn_off: 
+          id: green_led
+          
+  - platform: binary
+    id: greenlight
+    internal: true
+    name: Green LED
+    output:  green_led
+    
+  - platform: status_led
+    internal: true
+    name: Red LED
+    pin: GPIO26
+    
+output:
+  - platform: gpio
+    pin: GPIO5
+    inverted: false
+    id: relay
+
+  - platform: gpio
+    pin: GPIO14
+    inverted: false
+    id: green_led
+
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO32
+      inverted: true
+      mode: INPUT_PULLUP
+    name: ON Button
+    internal: false
+    on_click:
+      - light.turn_on: relaylight
+           
+  - platform: gpio
+    pin:
+      number: GPIO33
+      inverted: true
+      mode: INPUT_PULLUP
+    name: OFF Button
+    internal: False
+    on_click:
+      - light.turn_off: relaylight
+
+esp32_ble_tracker:
+
+bluetooth_proxy:
+  active: true
