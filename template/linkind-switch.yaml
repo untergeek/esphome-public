@@ -53,7 +53,7 @@ binary_sensor:
     name: ON Button
     internal: false
     on_click:
-      - light.turn_on: relay
+      - switch.turn_on: relay
            
   - platform: gpio
     pin:
@@ -63,7 +63,7 @@ binary_sensor:
     name: OFF Button
     internal: False
     on_click:
-      - light.turn_off: relay
+      - switch.turn_off: relay
 
 esp32_ble_tracker:
 
