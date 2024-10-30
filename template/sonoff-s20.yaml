@@ -18,6 +18,7 @@ packages:
 substitutions:
   device_id: relay
   icon: mdi:power-socket-us
+  restore_mode: DISABLED
 
 binary_sensor:
   - platform: gpio
@@ -36,7 +37,7 @@ switch:
     name: Switch
     pin: GPIO12
     id: ${device_id}
-    restore_mode: ${restore}
+    restore_mode: ${restore_mode}
 
 status_led:
   pin:
