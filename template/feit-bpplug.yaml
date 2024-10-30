@@ -1,0 +1,49 @@
+---
+# We track the project name and version here in the template
+packages:
+  main: !include
+    file: ../esphome.yaml
+    vars:
+      project_name: untergeek.bpplug
+      project_version: 1.0.0
+  chip: !include
+    file: ../esp8266.yaml
+    vars:
+      board: esp8285
+  sync: !include ../time.yaml
+  togl: !include ../restart_switch.yaml
+  logs: !include ../logging.yaml
+
+substitutions:
+  device_id: relay
+
+status_led:
+  pin:
+    number: GPIO4
+    inverted: yes
+
+binary_sensor:
+  - platform: gpio  
+    id: button
+    pin:
+      number: GPIO13
+      mode: INPUT_PULLUP
+      inverted: True
+    on_press:
+      - switch.toggle: $device_id
+
+output:
+  - platform: gpio
+    id: ${device_id}_status
+    pin: GPIO5
+    inverted: yes
+    
+switch:
+  - platform: gpio
+    id: $device_id
+    name: Switch
+    pin: GPIO12
+    on_turn_on:
+      - output.turn_on: ${device_id}_status
+    on_turn_off:
+      - output.turn_off: ${device_id}_status
