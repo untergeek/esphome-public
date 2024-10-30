@@ -1,0 +1,44 @@
+---
+# We track the project name and version here in the template
+packages:
+  main: !include
+    file: ../esphome.yaml
+    vars:
+      project_name: untergeek.sonoff-s20
+      project_version: 1.0.0
+  chip: !include
+    file: ../esp8266.yaml
+    vars:
+      board: esp01_1m
+  sync: !include ../time.yaml
+  togl: !include ../restart_switch.yaml
+  logs: !include ../logging.yaml
+  sgnl: !include ../wifi_signal.yaml
+
+substitutions:
+  device_id: relay
+  icon: mdi:power-socket-us
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: True
+    name: Button
+    on_press:
+      - switch.toggle: ${device_id}
+  - platform: status
+    name: Status
+
+switch:
+  - platform: gpio
+    name: Switch
+    pin: GPIO12
+    id: ${device_id}
+    restore_mode: ${restore}
+
+status_led:
+  pin:
+    number: GPIO13
+    inverted: true
