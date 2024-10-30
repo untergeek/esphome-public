@@ -16,6 +16,7 @@ packages:
 
 substitutions:
   device_id: relay
+  icon: mdi:power-socket-us
 
 status_led:
   pin:
@@ -30,7 +31,7 @@ binary_sensor:
       mode: INPUT_PULLUP
       inverted: True
     on_press:
-      - switch.toggle: $device_id
+      - switch.toggle: ${device_id}
 
 output:
   - platform: gpio
@@ -40,8 +41,9 @@ output:
     
 switch:
   - platform: gpio
-    id: $device_id
+    id: ${device_id}
     name: Switch
+    icon: ${icon}
     pin: GPIO12
     on_turn_on:
       - output.turn_on: ${device_id}_status
