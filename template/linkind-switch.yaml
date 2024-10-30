@@ -11,7 +11,8 @@ esp32:
   framework:
     type: esp-idf
     sdkconfig_options:
-      CONFIG_FREERTOS_UNICORE: y    
+      CONFIG_FREERTOS_UNICORE: y
+      CONFIG_ESP_TASK_WDT_TIMEOUT_S: "10" 
 
 switch:
   - platform: gpio
@@ -66,6 +67,11 @@ binary_sensor:
       - switch.turn_off: relay
 
 esp32_ble_tracker:
+  scan_parameters:
+# Adjust timing if the defaults do not work in your environment
+#    interval: 1100ms
+#    window: 1100ms
+    active: true
 
 bluetooth_proxy:
   active: true
