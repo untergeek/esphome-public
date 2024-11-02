@@ -5,7 +5,7 @@ packages:
     file: ../esphome.yaml
     vars:
       project_name: untergeek.mjsd01
-      project_version: 1.0.0
+      project_version: 1.0.3
   chip: !include
     file: ../esp8266.yaml
     vars:
