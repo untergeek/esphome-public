@@ -5,7 +5,7 @@ packages:
     file: ../esphome.yaml
     vars:
       project_name: untergeek.mjsd01
-      project_version: 1.0.3
+      project_version: 1.0.4
   chip: !include
     file: ../esp8266.yaml
     vars:
@@ -13,13 +13,14 @@ packages:
   sync: !include ../time.yaml
   togl: !include ../restart_switch.yaml
   logs: !include ../logging.yaml
+  sgnl: !include ../wifi_signal.yaml
 
 substitutions:
   icon: "mdi:light-switch"
   pwm_min_power: "0.15"
   pwm_max_power: "1"
   pwm_frequency: 1000 Hz
-  gamma_correct: "2.0"
+  gamma_correct: "2.8"
   no_delay: 0s   # transition when changing dimmer_lvl & relay delay
   transition_length: .5s   # transition when turning on/off
   long_press_min: .4s   # minimum time to activate long-press action
