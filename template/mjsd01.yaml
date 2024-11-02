@@ -19,6 +19,7 @@ substitutions:
   pwm_min_power: "0.15"
   pwm_max_power: "1"
   pwm_frequency: 1000 Hz
+  gamma_correct: "2.0"
   no_delay: 0s   # transition when changing dimmer_lvl & relay delay
   transition_length: .5s   # transition when turning on/off
   long_press_min: .4s   # minimum time to activate long-press action
@@ -72,6 +73,7 @@ light:
     name: ${friendly_name}
     icon: ${icon}
     output: pwm
+    gamma_correct: "${gamma_correct}"
     default_transition_length: ${no_delay}
     id: dimmer
 
