@@ -18,6 +18,7 @@ substitutions:
   icon: "mdi:light-switch"
   pwm_min_power: "0.15"
   pwm_max_power: "1"
+  pwm_frequency: 1000 Hz
   no_delay: 0s   # transition when changing dimmer_lvl & relay delay
   transition_length: .5s   # transition when turning on/off
   long_press_min: .4s   # minimum time to activate long-press action
@@ -60,6 +61,7 @@ output:
     pin: GPIO13
     id: pwm
     power_supply: relay
+    frequency: ${pwm_frequency}
     min_power: ${pwm_min_power}
     max_power: ${pwm_max_power}
 
