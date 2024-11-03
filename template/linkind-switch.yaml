@@ -2,7 +2,7 @@
 # Special odditiy that runs a weird, single-core ESP32 chip but still has BLE
 substitutions:
   project_name: "untergeek.linkind_switch"
-  project_version: "1.0.0"
+  project_version: "1.0.1"
 
 <<: !include ../common.yaml
 
