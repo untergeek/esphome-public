@@ -76,7 +76,14 @@ esp32_ble_tracker:
 # Adjust timing if the defaults do not work in your environment
 #    interval: 1100ms
 #    window: 1100ms
-    active: true
+    continuous: false
+
+api:
+  on_client_connected:
+    - esp32_ble_tracker.start_scan:
+       continuous: true
+  on_client_disconnected:
+    - esp32_ble_tracker.stop_scan:
 
 bluetooth_proxy:
   active: true
