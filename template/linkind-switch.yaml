@@ -22,10 +22,10 @@ switch:
     inverted: false
     on_turn_on: 
       - output.turn_on:
-          id: redlight
+          id: red_led
     on_turn_off:
       - output.turn_off: 
-          id: redlight
+          id: red_led
 
 light:    
   - platform: binary
@@ -46,7 +46,7 @@ output:
     id: green_led
   - platform: gpio
     pin: GPIO26
-    inverted: False
+    inverted: false
     id: red_led
 
 
