@@ -5,7 +5,7 @@ packages:
     file: ../esphome.yaml
     vars:
       project_name: untergeek.bpdim
-      project_version: 1.2.0
+      project_version: 1.2.1
   chip: !include
     file: ../esp8266.yaml
     vars:
@@ -59,12 +59,3 @@ light:
     min_value: ${min}
     max_value: ${max}
 
-text_sensor:
-  - platform: "tuya"
-    name: "Dimmer Value"
-    sensor_datapoint: 2
-    entity_category: diagnostic
-  - platform: "tuya"
-    name: "Switch Value"
-    sensor_datapoint: 1
-    entity_category: diagnostic
