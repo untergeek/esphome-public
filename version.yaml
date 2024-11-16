@@ -1,0 +1,8 @@
+---
+text_sensor:
+  - platform: version
+    name: ${friendly_name} Version
+    hide_timestamp: true
+    disabled_by_default: false
+    icon: mdi:new-box
+    entity_category: diagnostic
