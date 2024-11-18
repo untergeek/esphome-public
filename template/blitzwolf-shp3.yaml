@@ -1,19 +1,13 @@
 ---
 packages:
-  main: !include
-    file: ../esphome.yaml
-    vars:
-      project_name: untergeek.blitzwolf-shp3
-      project_version: 1.0.0
-  chip: !include
-    file: ../esp8266.yaml
-    vars:
-      board: esp01_1m
-  sync: !include ../time.yaml
+  chip: !include ../esp8266.yaml
+  comm: !include ../common.yaml
   togl: !include ../restart_switch.yaml
-  logs: !include ../logging.yaml
 
 substitutions:
+  board: esp01_1m
+  project_name: untergeek.blitzwolf-shp3
+  project_version: 1.0.0
   icon: mdi:power-socket-us
   current_res: "0.00221" # Arbitrary value. Requires power monitoring calibration
   voltage_div: "955" # Arbitrary value. Requires power monitoring calibration

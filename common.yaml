@@ -1,6 +1,9 @@
 ---
 packages:
-  esphome: !include esphome.yaml
-  time: !include time.yaml
-  logging: !include logging.yaml
+  esp_home: !include esphome.yaml
+  timesync: !include time.yaml
+  logging1: !include logging.yaml
+  uptime_1: !include uptime.yaml
+  version1: !include version.yaml
+  signal_1: !include wifi_signal.yaml
 
