@@ -1,18 +1,8 @@
 ---
-# We track the project name and version here in the template
 packages:
-  main: !include
-    file: ../esphome.yaml
-    vars:
-      project_name: untergeek.gosund-ks602
-      project_version: 1.0.0
-  chip: !include
-    file: ../esp8266.yaml
-    vars:
-      board: esp01_1m
-  sync: !include ../time.yaml
+  chip: !include ../esp8266.yaml
+  comm: !include ../common.yaml
   togl: !include ../restart_switch.yaml
-  logs: !include ../logging.yaml
   tmpl: !include
     file: ks602.yaml
     vars:
@@ -22,6 +12,11 @@ packages:
       relay_id: relay1
       relay_pin: GPIO14
       button_pin: GPIO0
+
+substitutions:
+  board: esp01_1m
+  project_name: untergeek.gosund-ks602
+  project_version: 1.0.1
 
 # The status_led is part of the gosund-ks602s, but not the generic ks602 parent
 

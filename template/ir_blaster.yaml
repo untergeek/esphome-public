@@ -4,15 +4,13 @@
 ### You must manually add board: esp01_1m or board: esp12e
 
 packages:
-  main: !include
-    file: ../esphome.yaml
-    vars:
-      project_name: untergeek.esp8266_ir_blaster
-      project_version: 1.0.0
   chip: !include ../esp8266.yaml
-  sync: !include ../time.yaml
+  comm: !include ../common.yaml
   togl: !include ../restart_switch.yaml
-  logs: !include ../logging.yaml
+
+substitutions:
+  project_name: untergeek.esp8266_ir_blaster
+  project_version: 1.0.1
 
 # You need to include at least one of ir_tx.yaml or ir_rx.yaml, or build your own
 # remote_transmitter / remote_receiver blocks
