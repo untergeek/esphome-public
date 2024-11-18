@@ -1,24 +1,13 @@
 ---
-# We track the project name and version here in the template
 packages:
-  main: !include
-    file: ../esphome.yaml
-    vars:
-      project_name: untergeek.bpdim
-      project_version: 1.2.2
-  chip: !include
-    file: ../esp8266.yaml
-    vars:
-      board: esp01_1m
-  sync: !include ../time.yaml
+  chip: !include ../esp8266.yaml
+  comm: !include ../common.yaml
   togl: !include ../restart_switch.yaml
-  logs: !include ../logging.yaml
-  uptm: !include ../uptime.yaml
-  vers: !include ../version.yaml
-  wifi: !include ../wifi_signal.yaml
-  
 
 substitutions:
+  board: esp01_1m
+  project_name: untergeek.bpdim
+  project_version: 1.2.2
   light_id: dimmer
   icon: "mdi:light-switch"
   min: "10"
