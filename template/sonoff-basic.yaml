@@ -1,21 +1,14 @@
 ---
-# We track the project name and version here in the template
 packages:
-  main: !include
-    file: ../esphome.yaml
-    vars:
-      project_name: untergeek.sonoff-basic
-      project_version: 1.0.0
-  chip: !include
-    file: ../esp8266.yaml
-    vars:
-      board: esp01_1m
-  sync: !include ../time.yaml
+  chip: !include ../esp8266.yaml
+  comm: !include ../common.yaml
   togl: !include ../restart_switch.yaml
-  logs: !include ../logging.yaml
 
 substitutions:
+  board: esp01_1m
   icon: "phu:smart-switch"
+  project_name: untergeek.sonoff-basic
+  project_version: 1.0.0
 
 switch:
   - platform: gpio

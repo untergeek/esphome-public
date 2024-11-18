@@ -5,19 +5,14 @@ packages:
     files:
       - base.yaml
     refresh: 1s
-  main: !include
-    file: ../esphome.yaml
-    vars:
-      project_name: ratgdo.esphome
-      project_version: "2.5"
-  chip: !include
-    file: ../esp8266.yaml
-    vars:
-      board: d1_mini
-  sync: !include ../time.yaml
-  logs: !include ../logging.yaml
+  chip: !include ../esp8266.yaml
+  comm: !include ../common.yaml
+  togl: !include ../restart_switch.yaml
 
 substitutions:
+  board: d1_mini
+  project_name: ratgdo.esphome
+  project_version: "2.5"
   id_prefix: rgdo
   restore: "True"
   log_baud: "115200"

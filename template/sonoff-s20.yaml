@@ -1,21 +1,13 @@
 ---
-# We track the project name and version here in the template
 packages:
-  main: !include
-    file: ../esphome.yaml
-    vars:
-      project_name: untergeek.sonoff-s20
-      project_version: 1.0.0
-  chip: !include
-    file: ../esp8266.yaml
-    vars:
-      board: esp01_1m
-  sync: !include ../time.yaml
+  chip: !include ../esp8266.yaml
+  comm: !include ../common.yaml
   togl: !include ../restart_switch.yaml
-  logs: !include ../logging.yaml
-  sgnl: !include ../wifi_signal.yaml
 
 substitutions:
+  board: esp01_1m
+  project_name: untergeek.sonoff-s20
+  project_version: 1.0.1
   device_id: relay
   icon: mdi:power-socket-us
   restore_mode: DISABLED
