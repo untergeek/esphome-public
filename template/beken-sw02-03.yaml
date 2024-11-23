@@ -8,9 +8,9 @@ substitutions:
   board: generic-bk7231t-qfn32-tuya
   project_name: untergeek.beken_sw02-03
   project_version: 1.0.0
-  switch1: relay1
-  switch2: relay2
-  switch3: relay3
+  id1: relay1
+  id2: relay2
+  id3: relay3
   name1: "Top Switch"
   icon1: mdi:toggle-switch-variant
   name2: "Middle Switch"
@@ -25,9 +25,10 @@ text_sensor:
 
 status_led:
   pin:
-    number: P23
-    inverted: False
+    number: P0
+    inverted: true
     # inverted: True will yield a RED WiFi status light instead of BLUE
+    # P23 is the LED RED Status. "inverted: false" means it's off by default
 
 output:
   - platform: gpio
@@ -56,7 +57,7 @@ light:
 
 switch:
   - platform: gpio
-    id: ${switch1}
+    id: ${id1}
     pin: P6
     name: ${name1}
     icon: ${icon1}
@@ -66,7 +67,7 @@ switch:
     on_turn_off:
       - light.turn_off: status1
   - platform: gpio
-    id: ${switch2}
+    id: ${id2}
     pin: P7
     name: ${name2}
     icon: ${icon2}
@@ -76,7 +77,7 @@ switch:
     on_turn_off:
       - light.turn_off: status2
   - platform: gpio
-    id: ${switch3}
+    id: ${id3}
     pin: P9
     name: ${name3}
     icon: ${icon3}
@@ -95,7 +96,7 @@ binary_sensor:
       mode: INPUT_PULLUP
     on_press:
       then:
-        - switch.toggle: ${switch1}
+        - switch.toggle: ${id1}
   - platform: gpio
     internal: true
     name: "${friendly_name} Button 2"
@@ -104,7 +105,7 @@ binary_sensor:
       mode: INPUT_PULLUP
     on_press:
       then:
-        - switch.toggle: ${switch2}
+        - switch.toggle: ${id2}
   - platform: gpio
     internal: true
     name: "${friendly_name} Button 3"
@@ -113,4 +114,4 @@ binary_sensor:
       mode: INPUT_PULLUP
     on_press:
       then:
-        - switch.toggle: ${switch3}
+        - switch.toggle: ${id3}
