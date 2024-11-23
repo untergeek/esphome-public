@@ -44,7 +44,7 @@ output:
 
 light:
   - platform: status_led
-    name: "Device State"
+    name: "ESPHome Status LED"
     # Can use either blue_led output or red_led output
     output: blue_led
     # output: red_led
@@ -92,30 +92,6 @@ switch:
       - light.turn_on: status3
     on_turn_off:
       - light.turn_off: status3
-  - platform: template
-    id: s0
-    name: P0
-    optimistic: true
-    on_turn_on:
-      - light.turn_on: test0
-    on_turn_off:
-      - light.turn_off: test0
-  - platform: template
-    id: s11
-    name: P11
-    optimistic: true
-    on_turn_on:
-      - light.turn_on: test11
-    on_turn_off:
-      - light.turn_off: test11
-  - platform: template
-    id: s23
-    name: P23
-    optimistic: true
-    on_turn_on:
-      - light.turn_on: test23
-    on_turn_off:
-      - light.turn_off: test23
 
 binary_sensor:
   - platform: gpio
