@@ -8,12 +8,9 @@ substitutions:
   board: generic-bk7231t-qfn32-tuya
   project_name: untergeek.beken_sw02-03
   project_version: 1.0.0
-  light1: light1
-  light2: light2
-  light3: light3
-  switch1: switch1
-  switch2: switch2
-  switch3: switch3
+  switch1: relay1
+  switch2: relay2
+  switch3: relay3
   name1: "Top Switch"
   icon1: mdi:toggle-switch-variant
   name2: "Middle Switch"
@@ -29,7 +26,6 @@ text_sensor:
 status_led:
   pin:
     number: P23
-    # Possibly P1
     inverted: True
 
 output:
@@ -39,59 +35,55 @@ output:
   - platform: gpio
     id: output_led_2
     pin: P26
-    # Possibles: P0/TXD2,  P26/PWM5
-    # Tested but wrong: P11
-    # Non-GPIO = P2-5, P12-13, P15-22, P25
-    # In use: P1, P6-10, P14, P23-24
   - platform: gpio
     id: output_led_3
     pin: P14
 
 light:
   - platform: binary
-    id: ${light1}
-    name: ${name1}
-    icon: ${icon1}
+    id: status1
+    internal: true
     output: output_led_1
   - platform: binary
-    id: ${light2}
-    name: ${name2}
-    icon: ${icon2}
+    id: status2
+    internal: true
     output: output_led_2
   - platform: binary
-    id: ${light3}
-    name: ${name3}
-    icon: ${icon3}
+    id: status3
+    internal: true
     output: output_led_3
 
 switch:
   - platform: gpio
     id: ${switch1}
     pin: P6
-    internal: true
+    name: ${name1}
+    icon: ${icon1}
     restore_mode: RESTORE_DEFAULT_OFF
     on_turn_on:
-      - light.turn_on: ${light1}
+      - light.turn_on: status1
     on_turn_off:
-      - light.turn_off: ${light1}
+      - light.turn_off: status1
   - platform: gpio
     id: ${switch2}
     pin: P7
-    internal: true
+    name: ${name2}
+    icon: ${icon2}
     restore_mode: RESTORE_DEFAULT_OFF
     on_turn_on:
-      - light.turn_on: ${light2}
+      - light.turn_on: status2
     on_turn_off:
-      - light.turn_off: ${light2}
+      - light.turn_off: status2
   - platform: gpio
     id: ${switch3}
     pin: P9
-    internal: true
+    name: ${name3}
+    icon: ${icon3}
     restore_mode: RESTORE_DEFAULT_OFF
     on_turn_on:
-      - light.turn_on: ${light3}
+      - light.turn_on: status3
     on_turn_off:
-      - light.turn_off: ${light3}
+      - light.turn_off: status3
 
 binary_sensor:
   - platform: gpio
