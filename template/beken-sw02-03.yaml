@@ -1,0 +1,122 @@
+---
+packages:
+  chip: !include ../bk72xx.yaml
+  comm: !include ../common.yaml
+  togl: !include ../restart_switch.yaml
+
+substitutions:
+  board: generic-bk7231t-qfn32-tuya
+  project_name: untergeek.beken_sw02-03
+  project_version: 1.0.0
+  light1: light1
+  light2: light2
+  light3: light3
+  switch1: switch1
+  switch2: switch2
+  switch3: switch3
+  name1: "Top Switch"
+  icon1: mdi:toggle-switch-variant
+  name2: "Middle Switch"
+  icon2: mdi:toggle-switch-variant
+  name3: "Bottom Switch"
+  icon3: mdi:toggle-switch-variant
+
+text_sensor:
+  - platform: libretiny
+    version:
+      name: LibreTiny Version
+
+status_led:
+  pin:
+    number: P23
+    # Possibly P1
+    inverted: True
+
+output:
+  - platform: gpio
+    id: output_led_1
+    pin: P1
+  - platform: gpio
+    id: output_led_2
+    pin: P11
+    # Possibles: P0/TXD2, P11/TXD1, P26/PWM5
+    # Non-GPIO = P2-5, P12-13, P15-22, P25
+    # In use: P1, P6-10, P14, P23-24
+  - platform: gpio
+    id: output_led_3
+    pin: P14
+
+light:
+  - platform: binary
+    id: ${light1}
+    name: ${name1}
+    icon: ${icon1}
+    output: output_led_1
+  - platform: binary
+    id: ${light2}
+    name: ${name2}
+    icon: ${icon2}
+    output: output_led_2
+  - platform: binary
+    id: ${light3}
+    name: ${name3}
+    icon: ${icon3}
+    output: output_led_3
+
+switch:
+  - platform: gpio
+    id: ${switch1}
+    pin: P6
+    internal: true
+    restore_mode: RESTORE_DEFAULT_OFF
+    on_turn_on:
+      - light.turn_on: ${light1}
+    on_turn_off:
+      - light.turn_off: ${light1}
+  - platform: gpio
+    id: ${switch2}
+    pin: P7
+    internal: true
+    restore_mode: RESTORE_DEFAULT_OFF
+    on_turn_on:
+      - light.turn_on: ${light2}
+    on_turn_off:
+      - light.turn_off: ${light2}
+  - platform: gpio
+    id: ${switch3}
+    pin: P9
+    internal: true
+    restore_mode: RESTORE_DEFAULT_OFF
+    on_turn_on:
+      - light.turn_on: ${light3}
+    on_turn_off:
+      - light.turn_off: ${light3}
+
+binary_sensor:
+  - platform: gpio
+    internal: true
+    name: "${friendly_name} Button 1"
+    pin:
+      number: P24
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - switch.toggle: ${switch1}
+  - platform: gpio
+    internal: true
+    name: "${friendly_name} Button 2"
+    pin:
+      number: P8
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - switch.toggle: ${switch2}
+  - platform: gpio
+    internal: true
+    name: "${friendly_name} Button 3"
+    pin:
+      number: P10
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - switch.toggle: ${switch3}
