@@ -45,7 +45,9 @@ output:
 light:
   - platform: status_led
     name: "ESPHome Status LED"
-    # Can use either blue_led output or red_led output
+    id: status_led
+    internal: true
+    # Can use either "output: blue_led" or "output: red_led"
     output: blue_led
     # output: red_led
   - platform: binary
