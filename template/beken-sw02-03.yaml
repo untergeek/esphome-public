@@ -27,7 +27,7 @@ status_led:
   pin:
     number: P23
     inverted: False
-    # inverted: True will have the RED WIFI status light on all the time
+    # inverted: True will yield a RED WiFi status light instead of BLUE
 
 output:
   - platform: gpio
