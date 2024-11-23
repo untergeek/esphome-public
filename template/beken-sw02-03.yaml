@@ -23,13 +23,6 @@ text_sensor:
     version:
       name: LibreTiny Version
 
-# status_led:
-#   pin:
-#     number: P0
-#     inverted: true
-    # inverted: True will yield a RED WiFi status light instead of BLUE
-    # P23 is the LED RED Status. "inverted: false" means it's off by default
-
 output:
   - platform: gpio
     id: output_led_1
@@ -40,36 +33,21 @@ output:
   - platform: gpio
     id: output_led_3
     pin: P14
-  # Testing other pins
+  # Blue status LED behind the WiFi logo
   - platform: gpio
-    id: led0
-    pin: P0
-  - platform: gpio
-    id: led11
+    id: blue_led
     pin: P11
+  # Red status LED behind the WiFi logo
   - platform: gpio
-    id: led23
+    id: red_led
     pin: P23
-# In use:
-#  0
-#  1
-#  6
-#  7
-#  8
-#  9
-#  10
-#  11
-#  14
-#  23
-#  24
-#  26
-
-#  Not in use (probably not even soldered)
-#  P20
-#  P21
-#  P22
 
 light:
+  - platform: status_led
+    name: "Device State"
+    # Can use either blue_led output or red_led output
+    output: blue_led
+    # output: red_led
   - platform: binary
     id: status1
     internal: true
@@ -82,16 +60,6 @@ light:
     id: status3
     internal: true
     output: output_led_3
-  # Testing other LEDs
-  - platform: binary
-    id: test0
-    output: led0
-  - platform: binary
-    id: test11
-    output: led11
-  - platform: binary
-    id: test23
-    output: led23
 
 switch:
   - platform: gpio
