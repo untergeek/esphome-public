@@ -127,6 +127,7 @@ switch:
   - platform: template
     id: s0
     name: P0
+    optimistic: true
     on_turn_on:
       - light.turn_on: test0
     on_turn_off:
@@ -134,6 +135,7 @@ switch:
   - platform: template
     id: s11
     name: P11
+    optimistic: true
     on_turn_on:
       - light.turn_on: test11
     on_turn_off:
@@ -141,6 +143,7 @@ switch:
   - platform: template
     id: s23
     name: P23
+    optimistic: true
     on_turn_on:
       - light.turn_on: test23
     on_turn_off:
