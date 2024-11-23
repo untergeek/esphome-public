@@ -38,8 +38,9 @@ output:
     pin: P1
   - platform: gpio
     id: output_led_2
-    pin: P11
-    # Possibles: P0/TXD2, P11/TXD1, P26/PWM5
+    pin: P26
+    # Possibles: P0/TXD2,  P26/PWM5
+    # Tested but wrong: P11
     # Non-GPIO = P2-5, P12-13, P15-22, P25
     # In use: P1, P6-10, P14, P23-24
   - platform: gpio
