@@ -26,7 +26,8 @@ text_sensor:
 status_led:
   pin:
     number: P23
-    inverted: True
+    inverted: False
+    # inverted: True will have the RED WIFI status light on all the time
 
 output:
   - platform: gpio
