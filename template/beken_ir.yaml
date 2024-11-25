@@ -1,0 +1,26 @@
+---
+packages:
+  chip: !include ../bk72xx.yaml
+  comm: !include ../common.yaml
+  togl: !include ../restart_switch.yaml
+
+substitutions:
+  board: cb3s
+  project_name: untergeek.beken_ir_blaster
+  project_version: 1.0.0
+  button_pin: P6
+  ir_rx_pin: P7
+  wifi_led_pin: P8
+  ir_tx_pin: P26
+  duty_pct: 50%
+
+remote_transmitter:
+  id: ir_tx
+  pin: ${ir_tx_pin}
+  carrier_duty_percent: ${duty_pct}
+
+# remote_receiver:
+#   id: ir_rx
+#   pin:
+#     number: ${ir_rx_pin}
+#     inverted: ${inverted}

@@ -1,3 +1,5 @@
 ---
 bk72xx:
   board: ${board}
+  framework:
+    version: latest

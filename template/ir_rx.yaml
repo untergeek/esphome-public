@@ -1,13 +1,22 @@
 ---
-### For ESP8266 based blaster units -- including ESP12-E analogs like the Tuya CB3S --
+### For ESP8266 based blasters -- including ESP12-E analogs like the Tuya CB3S --
 ### the GPIOs all seem to be the same
 
+# ESP8266
 substitutions:
   button_pin: GPIO13
   ir_rx_pin: GPIO5
   wifi_led_pin: GPIO4
   ir_tx_pin: GPIO14
-  inverted: true
+  duty_pct: 50%
+
+# CB3S Substitutions:
+# substitutions:
+#   button_pin: P6
+#   ir_rx_pin: P7
+#   wifi_led_pin: P8
+#   ir_tx_pin: P26
+#   duty_pct: 50%
 
 remote_receiver:
   id: ir_rx
