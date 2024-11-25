@@ -3,3 +3,8 @@ bk72xx:
   board: ${board}
   framework:
     version: latest
+
+text_sensor:
+  - platform: libretiny
+    version:
+      name: LibreTiny Version

@@ -18,11 +18,6 @@ substitutions:
   name3: "Bottom Switch"
   icon3: mdi:toggle-switch-variant
 
-text_sensor:
-  - platform: libretiny
-    version:
-      name: LibreTiny Version
-
 output:
   - platform: gpio
     id: output_led_1
