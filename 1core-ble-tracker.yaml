@@ -1,0 +1,29 @@
+---
+substitutions:
+  interval: 320ms
+  window: 30ms
+
+# This special package is necessary for single-core ESP32s
+# The multi-core ESP32s can divide and conquer, having one core do WiFi duty while
+# another does BLE, etc. But the ESP32 C3 and others only have a single core.
+# With only a single core, trying to poll BLE while trying to connect to WiFi
+# causes issues. As a result, we hard code `continous: false` as a scan paramter,
+# and add the API configuration to not start BLE scanning until the client is
+# connected, and also to stop scanning BLE if the client disconnects.
+
+esp32_ble_tracker:
+  id: 1core-tracker
+  scan_parameters:
+    interval: ${interval}
+    window: ${window}
+    continuous: false
+
+api:
+  on_client_connected:
+    - esp32_ble_tracker.start_scan:
+       continuous: true
+  on_client_disconnected:
+    - esp32_ble_tracker.stop_scan:
+
+bluetooth_proxy:
+  active: true

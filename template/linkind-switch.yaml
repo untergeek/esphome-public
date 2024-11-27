@@ -1,11 +1,12 @@
 ---
-# Special odditiy that runs a weird, single-core ESP32 chip but still has BLE
+# Special oddity that runs a weird, single-core ESP32 chip but still has BLE
 substitutions:
   project_name: "untergeek.linkind_switch"
-  project_version: "1.0.2"
+  project_version: "1.0.3"
 
 <<: !include ../common.yaml
 <<: !include ../restart_switch.yaml
+<<: !include ../1core-ble-tracker.yaml
 
 esp32:
   board: esp32dev
@@ -71,20 +72,3 @@ binary_sensor:
     internal: False
     on_click:
       - switch.turn_off: relay
-
-esp32_ble_tracker:
-  scan_parameters:
-# Adjust timing if the defaults do not work in your environment
-#    interval: 1100ms
-#    window: 1100ms
-    continuous: false
-
-api:
-  on_client_connected:
-    - esp32_ble_tracker.start_scan:
-       continuous: true
-  on_client_disconnected:
-    - esp32_ble_tracker.stop_scan:
-
-bluetooth_proxy:
-  active: true

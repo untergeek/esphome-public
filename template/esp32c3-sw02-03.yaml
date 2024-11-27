@@ -1,0 +1,127 @@
+---
+# ESP32-C3 is a single-core ESP32 chip with BLE support
+packages:
+  comm: !include ../common.yaml
+  togl: !include ../restart_switch.yaml
+  1ble: !include ../1core-ble-tracker.yaml
+
+substitutions:
+  project_name: untergeek.esp32c3_sw02-03
+  project_version: 1.0.0
+  id1: relay1
+  id2: relay2
+  id3: relay3
+  name1: "Top Switch"
+  icon1: mdi:toggle-switch-variant
+  name2: "Middle Switch"
+  icon2: mdi:toggle-switch-variant
+  name3: "Bottom Switch"
+  icon3: mdi:toggle-switch-variant
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_FREERTOS_UNICORE: y
+      CONFIG_ESP_TASK_WDT_TIMEOUT_S: "10" 
+
+output:
+  - platform: gpio
+    id: output_led_1
+    pin: GPIO9
+  - platform: gpio
+    id: output_led_2
+    pin: GPIO4
+  - platform: gpio
+    id: output_led_3
+    pin: GPIO2
+  # Blue status LED behind the WiFi logo
+  - platform: gpio
+    id: blue_led
+    pin: GPIO21
+  # Red status LED behind the WiFi logo
+  - platform: gpio
+    id: red_led
+    pin: GPIO1
+
+light:
+  - platform: status_led
+    name: "ESPHome Status LED"
+    internal: true
+    # Can use either "output: blue_led" or "output: red_led"
+    output: blue_led
+    # output: red_led
+  - platform: binary
+    id: status1
+    internal: true
+    output: output_led_1
+  - platform: binary
+    id: status2
+    internal: true
+    output: output_led_2
+  - platform: binary
+    id: status3
+    internal: true
+    output: output_led_3
+
+switch:
+  - platform: gpio
+    id: ${id1}
+    pin: GPIO6
+    name: ${name1}
+    icon: ${icon1}
+    restore_mode: RESTORE_DEFAULT_OFF
+    on_turn_on:
+      - light.turn_on: status1
+    on_turn_off:
+      - light.turn_off: status1
+  - platform: gpio
+    id: ${id2}
+    pin: GPIO7
+    name: ${name2}
+    icon: ${icon2}
+    restore_mode: RESTORE_DEFAULT_OFF
+    on_turn_on:
+      - light.turn_on: status2
+    on_turn_off:
+      - light.turn_off: status2
+  - platform: gpio
+    id: ${id3}
+    pin: GPIO10
+    name: ${name3}
+    icon: ${icon3}
+    restore_mode: RESTORE_DEFAULT_OFF
+    on_turn_on:
+      - light.turn_on: status3
+    on_turn_off:
+      - light.turn_off: status3
+
+binary_sensor:
+  - platform: gpio
+    internal: true
+    name: "${friendly_name} Button 1"
+    pin:
+      number: GPIO5
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - switch.toggle: ${id1}
+  - platform: gpio
+    internal: true
+    name: "${friendly_name} Button 2"
+    pin:
+      number: GPIO3
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - switch.toggle: ${id2}
+  - platform: gpio
+    internal: true
+    name: "${friendly_name} Button 3"
+    pin:
+      number: GPIO20
+      mode: INPUT_PULLUP
+    on_press:
+      then:
+        - switch.toggle: ${id3}
