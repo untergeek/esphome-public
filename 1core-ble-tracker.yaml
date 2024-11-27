@@ -12,7 +12,7 @@ substitutions:
 # connected, and also to stop scanning BLE if the client disconnects.
 
 esp32_ble_tracker:
-  id: 1core-tracker
+  id: single-core-tracker
   scan_parameters:
     interval: ${interval}
     window: ${window}
