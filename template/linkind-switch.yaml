@@ -3,10 +3,17 @@
 substitutions:
   project_name: "untergeek.linkind_switch"
   project_version: "1.0.3"
+  interval: 320ms
+  window: 30ms
 
-<<: !include ../common.yaml
-<<: !include ../restart_switch.yaml
-<<: !include ../1core-ble-tracker.yaml
+packages:
+  comm: !include ../common.yaml
+  togl: !include ../restart_switch.yaml
+  blue: !include
+    file: 1core-ble-tracker.yaml
+    vars:
+      interval: ${interval}
+      window: ${window}
 
 esp32:
   board: esp32dev
