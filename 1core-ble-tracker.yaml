@@ -1,4 +1,7 @@
 ---
+substitutions:
+  interval: 320ms
+  window: 30ms
 
 # This special package is necessary for single-core ESP32s
 # The multi-core ESP32s can divide and conquer, having one core do WiFi duty while

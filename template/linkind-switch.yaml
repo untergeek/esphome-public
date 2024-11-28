@@ -3,8 +3,6 @@
 substitutions:
   project_name: "untergeek.linkind_switch"
   project_version: "1.0.3"
-  interval: 320ms
-  window: 30ms
 
 packages:
   comm: !include ../common.yaml
