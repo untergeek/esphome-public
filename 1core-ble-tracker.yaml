@@ -1,7 +1,7 @@
 ---
 substitutions:
-  interval: 320ms
-  window: 30ms
+  ble_scan_interval: 320ms
+  ble_scan_window: 30ms
 
 # This special package is necessary for single-core ESP32s
 # The multi-core ESP32s can divide and conquer, having one core do WiFi duty while
@@ -14,8 +14,8 @@ substitutions:
 esp32_ble_tracker:
   id: single_core_tracker
   scan_parameters:
-    interval: ${interval}
-    window: ${window}
+    interval: ${ble_scan_interval}
+    window: ${ble_scan_window}
     continuous: false
 
 api:
