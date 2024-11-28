@@ -9,9 +9,9 @@ packages:
   togl: !include ../restart_switch.yaml
   blue: !include
     file: 1core-ble-tracker.yaml
-    vars:
-      interval: ${interval}
-      window: ${window}
+    # vars:
+    #   interval: ${interval}
+    #   window: ${window}
 
 esp32:
   board: esp32dev
