@@ -7,11 +7,7 @@ substitutions:
 packages:
   comm: !include ../common.yaml
   togl: !include ../restart_switch.yaml
-  blue: !include
-    file: 1core-ble-tracker.yaml
-    # vars:
-    #   interval: ${interval}
-    #   window: ${window}
+  blue: !include ../1core-ble-tracker.yaml
 
 esp32:
   board: esp32dev
