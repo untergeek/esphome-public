@@ -1,0 +1,3 @@
+---
+<<: !include ../common.yaml
+<<: !include { file: ../esp32.yaml, vars: { board: esp32dev } }
