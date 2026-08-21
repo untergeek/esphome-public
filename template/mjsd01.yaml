@@ -5,7 +5,9 @@ packages:
   togl: !include ../restart_switch.yaml
 
 substitutions:
-  board: esp_wroom_02
+  board: esp01_1m
+# This was apparently not good on some
+#  board: esp_wroom_02
   project_name: untergeek.mjsd01
   project_version: 1.0.5
   icon: "mdi:light-switch"
