@@ -33,11 +33,18 @@ substitutions:
 #      baud: # custom serial baud rate
 
 uart:
-  rx_pin: ${rx_pin}
-  tx_pin: ${tx_pin}
-  baud_rate: ${baud}
+  - id: mcu_uart
+    tx_pin: ${tx_pin}
+    rx_pin: ${rx_pin}
+    baud_rate: ${baud}
+    parity: NONE
+    stop_bits: 1
+    rx_buffer_size: 256
 
 tuya:
+  id: tuya_mcu
+  uart_id: mcu_uart
+  
 
 light:
   - platform: "tuya"
