@@ -11,10 +11,7 @@ substitutions:
   project_name: untergeek.mjsd01
   project_version: 1.0.5
   icon: "mdi:light-switch"
-  pwm_min_power: "0.15"
-  pwm_max_power: "1"
-  pwm_frequency: 1000 Hz
-  gamma_correct: "2.8"
+  pwm_min_power: 15%
   no_delay: 0s   # transition when changing dimmer_lvl & relay delay
   transition_length: .5s   # transition when turning on/off
   long_press_min: .4s   # minimum time to activate long-press action
@@ -22,182 +19,243 @@ substitutions:
   long_press_up: 100%   # long press brightness
   long_press_down: 33%   # long press brightness
   long_press_main: 50%   # long press brightness
+  # Number of incremental steps between 0 and 100% intensity with the up/down
+  # buttons.
+  steps: "8"
+  gamma_correct: "2.0" # Default gamma of 2.8 is generally too high.
 
-### Change from default values in substitutions
-
-# If any value needs changing, set substitutions in the main configuration file, or use vars during package import
-
-output:
+binary_sensor:
   - platform: gpio
-    # https://esphome.io/components/output/gpio.html
-    pin: GPIO3
-    inverted: true
-    id: led5
-
+    # https://esphome.io/components/binary_sensor/gpio/
+    #name: "${friendly_name} Up Button"
+    id: up_button
+    pin:
+      number: GPIO0
+      inverted: True
+      mode: INPUT_PULLUP
+    on_press:
+      # https://esphome.io/components/binary_sensor/#on_press
+      - if:
+          condition:
+            light.is_on: dimmer
+          then:
+            - lambda: !lambda |-
+                // Similar to light.dim_relative but add the flashing.
+                auto val = id(dimmer).remote_values.get_brightness();
+                if (val >= (${steps}.0f-1.0f)/${steps}.0f) {
+                  val = 1.0f;
+                } else {
+                  val += 1.0f/${steps}.0f;
+                }
+                auto call = id(dimmer).turn_on();
+                call.set_brightness(val);
+                call.perform();
+                if (val == 1.f) {
+                  id(flash_lights).execute();
+                }
+          else:
+            - light.turn_on:
+                id: dimmer
+                brightness: "${long_press_up}"
+    on_click:
+      # https://esphome.io/components/binary_sensor/#on_click
+      min_length: ${long_press_min}
+      max_length: ${long_press_max}
+      then:
+        - light.turn_on:
+            id: dimmer
+            brightness: "${long_press_up}"
   - platform: gpio
-    # https://esphome.io/components/output/gpio.html
-    pin: GPIO5
-    inverted: true
-    id: led4
-
+    # https://esphome.io/components/binary_sensor/gpio/
+    #name: "${friendly_name} Down Button"
+    id: down_button
+    pin:
+      number: GPIO1
+      inverted: True
+      mode: INPUT_PULLUP
+    on_press:
+      # https://esphome.io/components/binary_sensor/#on_press
+      - if:
+          condition:
+            light.is_on: dimmer
+          then:
+            - lambda: !lambda |-
+                // Similar to light.dim_relative but add the flashing.
+                auto val = id(dimmer).remote_values.get_brightness();
+                if (val <= 1.0f/${steps}.0f) {
+                  val = .01f;
+                } else {
+                  val -= 1.0f/${steps}.0f;
+                }
+                auto call = id(dimmer).turn_on();
+                call.set_brightness(val);
+                call.perform();
+                if (val == 0.01f) {
+                  id(flash_lights).execute();
+                }
+          else:
+            - light.turn_on:
+                id: dimmer
+                brightness: "${long_press_down}"
+    on_click:
+      # https://esphome.io/components/binary_sensor/#on-click
+      min_length: ${long_press_min}
+      max_length: ${long_press_max}
+      then:
+        - light.turn_on:
+            id: dimmer
+            brightness: "${long_press_down}"
   - platform: gpio
-    # https://esphome.io/components/output/gpio.html
-    pin: GPIO12
-    inverted: true
-    id: led3
-
-  - platform: gpio
-    # https://esphome.io/components/output/gpio.html
-    pin: GPIO14
-    inverted: true
-    id: led2
-
-  - platform: esp8266_pwm
-    # https://esphome.io/components/output/index.html#config-output
-    pin: GPIO13
-    id: pwm
-    power_supply: relay
-    frequency: ${pwm_frequency}
-    min_power: ${pwm_min_power}
-    max_power: ${pwm_max_power}
-
+    # https://esphome.io/components/binary_sensor/gpio/
+    #name: ${friendly_name} Main Button
+    id: main_button
+    pin:
+      number: GPIO15
+      mode: INPUT_PULLUP
+    on_press:
+      # TODO: Use "light.toggle: dimmer" instead of the code below if you want
+      # to keep the previous brightness by default.
+      # https://esphome.io/components/binary_sensor/#on-press
+      - if:
+          condition:
+            light.is_on: dimmer
+          then:
+            - light.turn_off: dimmer
+          else:
+            - light.turn_on:
+                id: dimmer
+                brightness: "${long_press_main}"
+    on_click:
+      # https://esphome.io/components/binary_sensor/#on-click
+      min_length: ${long_press_min}
+      max_length: ${long_press_max}
+      then:
+        - light.turn_on:
+            id: dimmer
+            brightness: "${long_press_main}"
 
 light:
+  - platform: status_led
+    id: ledred
+    pin:
+      number: GPIO4
+      inverted: True
   - platform: monochromatic
-    # https://esphome.io/components/light/monochromatic.html
-    name: ${friendly_name}
-    icon: ${icon}
-    output: pwm
-    gamma_correct: "${gamma_correct}"
-    default_transition_length: ${no_delay}
+    # https://esphome.io/components/light/monochromatic/
+    name: "${friendly_name}"
     id: dimmer
+    output: pwm
+    default_transition_length: ${no_delay}
+    gamma_correct: "${gamma_correct}"
+    effects:
+      - flicker:
+          name: "Flicker"
+          alpha: 90%
+          intensity: 25%
+      - strobe:
+          name: "Fast Pulse"
+          colors:
+            - state: true
+              brightness: 100%
+              duration: 500ms
+            - brightness: 1%
+              duration: 750ms
+    on_state:
+      - script.execute: set_lights
 
+script:
+  - id: set_lights
+    then:
+      - lambda: |-
+          if (id(dimmer).remote_values.get_state() == 0.f) {
+            id(led2).turn_off();
+            id(led3).turn_off();
+            id(led4).turn_off();
+            id(led5).turn_off();
+            // Comment the following line out if you don't want the red LED when
+            // the dimmer is off.
+            id(ledred).turn_on().perform();
+            return;
+          }
+          id(ledred).turn_off().perform();
+          auto val = id(dimmer).remote_values.get_brightness();
+          if (val >= .1f) {
+            id(led2).turn_on();
+          } else {
+            id(led2).turn_off();
+          }
+          if (val >= .36f) {
+            id(led3).turn_on();
+          } else {
+            id(led3).turn_off();
+          }
+          if (val >= .73f) {
+            id(led4).turn_on();
+          } else {
+            id(led4).turn_off();
+          }
+          if (val >= .9f) {
+            id(led5).turn_on();
+          } else {
+            id(led5).turn_off();
+          }
+  - id: flash_lights
+    then:
+      - output.turn_on: led2
+      - output.turn_on: led3
+      - output.turn_on: led4
+      - output.turn_on: led5
+      - delay: 150ms
+      - output.turn_off: led2
+      - output.turn_off: led3
+      - output.turn_off: led4
+      - output.turn_off: led5
+      - delay: 150ms
+      - output.turn_on: led2
+      - output.turn_on: led3
+      - output.turn_on: led4
+      - output.turn_on: led5
+      - delay: 150ms
+      - output.turn_off: led2
+      - output.turn_off: led3
+      - output.turn_off: led4
+      - output.turn_off: led5
+      - delay: 150ms
+      - script.execute: set_lights
+
+output:
+  - platform: esp8266_pwm
+    # https://esphome.io/components/output/esp8266_pwm/
+    power_supply: relay
+    pin: GPIO13
+    id: pwm
+    # Even lower frequency can be used. 120 Hz works fine in 60 Hz countries.
+    frequency: 300 Hz
+    min_power: ${pwm_min_power}
+  - platform: gpio
+    # https://esphome.io/components/output/gpio/
+    id: led2
+    pin: GPIO14
+    inverted: true
+  - platform: gpio
+    id: led3
+    pin: GPIO12
+    inverted: true
+  - platform: gpio
+    id: led4
+    pin: GPIO5
+    inverted: true
+  - platform: gpio
+    id: led5
+    pin: GPIO3
+    inverted: true
 
 power_supply:
   - id: relay
-    # https://esphome.io/components/power_supply.html
+    # https://esphome.io/components/power_supply/
     pin:
       number: GPIO16
       inverted: True
     enable_time: ${no_delay}
     keep_on_time: ${no_delay}
 
-
-binary_sensor:
-  - platform: gpio
-    # https://esphome.io/components/binary_sensor/gpio.html
-    pin:
-      number: GPIO0
-      inverted: True
-      mode: INPUT_PULLUP
-    name: ${friendly_name} Up Button
-    id: up_button
-    internal: True
-    on_press:
-      then:
-        - lambda: |-
-            if (id(dimmer_lvl) > .91) {
-              id(dimmer_lvl) = 1.0;
-            }
-            else if (id(dimmer_lvl) <= .91) {
-              id(dimmer_lvl) += .083;
-            };
-            id(apply_dimming).execute();
-    on_click:
-      # https://esphome.io/components/binary_sensor/index.html#on-click
-      min_length: ${long_press_min}
-      max_length: ${long_press_max}
-      then:
-        - light.turn_on:
-            id: dimmer
-            brightness: ${long_press_up}
-
-  - platform: gpio
-    # https://esphome.io/components/binary_sensor/gpio.html
-    pin:
-      number: GPIO1
-      inverted: True
-      mode: INPUT_PULLUP
-    name: ${friendly_name} Down Button
-    internal: True
-    on_press:
-      then:
-        - lambda: !lambda |-
-            if (id(dimmer_lvl) < .10) {
-              id(dimmer_lvl) = .01;
-            }
-            else if (id(dimmer_lvl) >= .10) {
-              id(dimmer_lvl) -= .083;
-            };
-            id(apply_dimming).execute();
-    on_click:
-      # https://esphome.io/components/binary_sensor/index.html#on-click
-      min_length: ${long_press_min}
-      max_length: ${long_press_max}
-      then:
-        - light.turn_on:
-            id: dimmer
-            brightness: ${long_press_down}
-
-  - platform: gpio
-    # https://esphome.io/components/binary_sensor/gpio.html
-    pin:
-      number: GPIO15
-      mode: INPUT_PULLUP
-    name: ${friendly_name} Main Button
-    internal: True
-    on_press:
-      - light.toggle: dimmer
-    on_click:
-      # https://esphome.io/components/binary_sensor/index.html#on-click
-      min_length: ${long_press_min}
-      max_length: ${long_press_max}
-      then:
-        - light.turn_on:
-            id: dimmer
-            brightness: ${long_press_main}
-
-
-globals:
-  - id: dimmer_lvl
-    # https://esphome.io/guides/automations.html#bonus-2-global-variables
-    type: float
-    restore_value: no
-    initial_value: '1.0'
-
-
-script:
-  - id: apply_dimming
-    # https://esphome.io/guides/automations.html#script-execute-action
-    then:
-      - lambda: |-
-          auto call = id(dimmer).turn_on();
-          call.set_brightness(id(dimmer_lvl));
-          call.perform();
-      - logger.log:
-          format: "dimmer_lvl = %.2f"
-          args: ['id(dimmer_lvl)']
-
-
-interval:
-  - interval: 250ms
-    # https://esphome.io/guides/automations.html#interval
-    then:
-      - lambda: |-
-          auto dimmer_vals = id(dimmer).current_values;
-          if (dimmer_vals.is_on()) {
-            id(dimmer_lvl) = dimmer_vals.get_brightness();
-            if (id(dimmer_lvl) > .19) { id(led2).turn_on(); }
-            if (id(dimmer_lvl) < .20) { id(led2).turn_off(); }
-            if (id(dimmer_lvl) > .39) { id(led3).turn_on(); }
-            if (id(dimmer_lvl) < .40) { id(led3).turn_off(); }
-            if (id(dimmer_lvl) > .59) { id(led4).turn_on(); }
-            if (id(dimmer_lvl) < .60) { id(led4).turn_off(); }
-            if (id(dimmer_lvl) > .79) { id(led5).turn_on(); }
-            if (id(dimmer_lvl) < .80) { id(led5).turn_off(); }
-          } else {
-            id(led2).turn_off();
-            id(led3).turn_off();
-            id(led4).turn_off();
-            id(led5).turn_off();
-          }
